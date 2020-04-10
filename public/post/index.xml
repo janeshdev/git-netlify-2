@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Janesh Devkota&#39;s Garden</title>
-    <link>/post/post/</link>
+    <link>/post/</link>
     <description>Recent content in Posts on Janesh Devkota&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 19 Feb 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Extracting water quality data from DataRetrieval Package</title>
-      <link>/post/2018/02/extracting-water-quality-data-from-dataretrieval-package/</link>
+      <link>/2018/02/extracting-water-quality-data-from-dataretrieval-package/</link>
       <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/2018/02/extracting-water-quality-data-from-dataretrieval-package/</guid>
+      <guid>/2018/02/extracting-water-quality-data-from-dataretrieval-package/</guid>
       <description>In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
 To install the dataRetrieval package use the following command:
 devtools::install_github(repo = &amp;quot;USGS-R/dataRetrieval&amp;quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
@@ -25,20 +25,20 @@ devtools::install_github(repo = &amp;quot;USGS-R/dataRetrieval&amp;quot;) The ma
     
     <item>
       <title>Spatial data and coordinate transformation in R</title>
-      <link>/post/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</link>
+      <link>/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</link>
       <pubDate>Tue, 19 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</guid>
+      <guid>/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</guid>
       <description>I come to these situations where I have to work with spatial datasets frequently. Sometimes the datasets is in lat-long format and sometimes on UTM (Universal transverse Mercator) coordinate or state plane coordinate system.
 I extensively use EFDC (Environmental Fluid Dynamic Code) model to do environmental modeling and have to convert the data into UTM coordinate system. I had used CORPSCON in the past but as an R enthusiast I wanted to dig deeper in R and finad a way to do the transformation in R environment.</description>
     </item>
     
     <item>
       <title>2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis</title>
-      <link>/post/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</link>
+      <link>/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</link>
       <pubDate>Tue, 05 Dec 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</guid>
+      <guid>/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</guid>
       <description>In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.</description>
     </item>
     

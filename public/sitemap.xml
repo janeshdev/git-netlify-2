@@ -3,50 +3,50 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/2018/02/extracting-water-quality-data-from-dataretrieval-package/</loc>
+    <loc>/2018/02/extracting-water-quality-data-from-dataretrieval-package/</loc>
     <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/post/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</loc>
-    <lastmod>2017-12-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</loc>
-    <lastmod>2017-12-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/12/spatial-analysis-and-coordinate-transformation-in-r/</loc>
+    <lastmod>2017-12-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/</loc>
+    <lastmod>2017-12-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/publications/</loc>
+    <loc>/publications/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/archives/</loc>
+    <loc>/archives/</loc>
   </url>
   
   <url>
-    <loc>/post/categories/</loc>
+    <loc>/categories/</loc>
   </url>
   
   <url>
-    <loc>/post/tags/</loc>
+    <loc>/tags/</loc>
   </url>
   
 </urlset>
