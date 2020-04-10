@@ -32,8 +32,8 @@ canonifyurls = true
 
 [author]
   name = "Janesh Devkota"
-  bio = "Data science enthusiast working as environmental / water resource engineer"
-  job = "Sr. Water Resources Engineer"
+  bio = "Data science enthusiast working as BI Engineer in Amazon"
+  job = "Business Intelligence Engineer"
   location = "Seattle, WA"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
   gravatarEmail = "janesh.devkota@gmail.com"
