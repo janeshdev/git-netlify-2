@@ -1,0 +1,37 @@
+---
+title: Extracting water quality data from DataRetrieval Package
+author: ~
+date: '2018-02-19'
+slug: extracting-water-quality-data-from-dataretrieval-package
+categories: []
+tags: []
+---
+
+
+
+<p>In this blog post, I will be showing some capabilities of <code>dataRetrieval</code> package
+by USGS to extract water quality data.</p>
+<p>To install the <code>dataRetrieval</code> package use the following command:</p>
+<pre class="r"><code>devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;)</code></pre>
+<p>The main function I will be discussing is <code>readWQPdata</code>. The users can search the data
+using various options as shown below:</p>
+<ul>
+<li>bBox = Bounding box that uses the coordinates of lower left corner and upper right corner</li>
+<li>lat / long = lat / long will be specified by the user if they are interested to
+see if any data is available within radial distance.</li>
+<li>countycode</li>
+<li>startDate:</li>
+<li>endDate:</li>
+<li>characteristicType</li>
+<li>characteristicName : CharacteristicName can be one of following</li>
+</ul>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<p>The tutorial for dataRetrieval can be accessed at
+<code>https://owi.usgs.gov/R/dataRetrieval.html#1</code></p>

@@ -1,0 +1,179 @@
+---
+title: Machine learning Cards from Twitter in R
+author: ~
+date: '2017-12-20'
+slug: machine-learning-cards-from-twitter-in-r
+categories: []
+tags: []
+---
+
+I have been following Chris Albon on Twitter and have seen some really nice looking 
+machine learning cards on his Twitter. While one can go to his [website](http://machinelearningflashcards.com) 
+and buy all the cards he has produced. However, I was curious to see if I could 
+download those flash cards in R. So, I started looking for a R package that would help
+to download the tweets by Chris Albon. I ended up using `rtweet` package for my 
+analysis. 
+
+The libraries that I would be using for this analysis are as follows: 
+
+* rtweet : To import the tweets from Twitter to R.
+* dplyr  : To do manipulation of tweets
+* rvest  : To extract the information from web data
+
+Let's get started with `rtweet` package. First I am going to search for the tweets 
+from Chris Albon. 
+
+```{r}
+# Load Libraries
+library(rtweet)
+library(dplyr)
+library(rvest)
+```
+
+### rtweet package usage
+
+I am going to use `search_tweets` function in `rtweet` package to find the tweets.
+
+```{r}
+albon <- rtweet::search_tweets(q = "chrisalbon", include_rts = FALSE,retryonratelimit = TRUE, n = 18000)
+# Look at head of albon dataframe
+head(albon)
+dim(albon)
+
+# We could also use the following but I wanted to see the tweets from Chris Albon
+# albon1 <- rtweet::search_tweets(q = "machinelearningflashcards.com", 
+#                                 include_rts = FALSE, 
+#                                 retryonratelimit = TRUE)
+```
+
+We have got a tibble with 2000 observations and 68 columns. Now, let's look at the actual tweets.
+We will be looking at the column `text` as it has the text of the tweet. 
+
+```{r}
+# Text of tweet
+albon[, "text"]
+```
+
+We are interested in the tweets that has images and url `machinelearningcards.com`.
+You will notice that all the images / links in Twitter are renamed with the prefix 
+"https://t.co/". After some observations, I found out that twitter renamed the 
+website `machinelearningflashcards.com` as `https://t.co/eZ2bbpDzwV`. So, let's use 
+this link as our pattern and find the tweets that has the link. We are going to 
+use `grep` function to find the pattern in the `text` column. 
+
+```{r}
+pattern <- "https://t.co/eZ2bbpDzwV"
+# Create a new dataframe with only text as the column
+machine_learning <- albon[grep(pattern, albon[,"text"] %>% .$text), "text"]
+machine_learning
+```
+
+After some manipulation, we have found 16 tweets that has machine learning terminology, 
+website link, and the flash card image link. As you can see in all the tweets above, 
+the first link is the website link and the last link is the image link. 
+
+If we try to download the image link, R will download the html document. We will 
+have to process these links a little so we can download all the images directly 
+from R. 
+
+### Separate terminology and image links
+
+```{r}
+# Flash Card URL as url column 
+machine_learning$url <- lapply(
+  1:nrow(machine_learning), 
+  FUN = function(x)
+    tail(strsplit(
+      machine_learning$text[x], split = " ")
+      [[1]],
+      n = 1)
+) %>%
+  as.character()
+
+# Machine learning terminology as name Column
+machine_learning$name <- lapply(1:nrow(machine_learning), function(x)
+  gsub(
+    x = machine_learning$text[x],
+    pattern = "https://.+", replacement = ""
+  )) %>%
+  as.character()
+
+machine_learning[, c("url", "name")]
+```
+
+We have now separated the terminology and image links. When we will be saving the 
+image we will use text in column `name` as the name of the flash card image. 
+
+### Use of rvest package to extract info from link 
+
+While we have separated the link that contains the link of the image, the actual 
+link that can be used to download image needs to be extracted from html of the pages. 
+
+Let us use the link `https://t.co/l8ZhhzAytA` from the above data frame to extract the link. 
+
+```{r}
+url <- "https://t.co/l8ZhhzAytA"
+url %>% 
+  read_html() %>% 
+  rvest::html_nodes('div.js-adaptive-photo') %>% 
+  as.character()
+```
+
+From the output above, we can see the link `https://pbs.twimg.com/media/DRg-8nNUMAAh7_g.png`. 
+This is the link we will be using to download the flash card. We want to process 
+it nicely so that we could use the same approach for all the 16 cards. Let's extract 
+only the image link. 
+
+```{r}
+url %>% 
+  read_html() %>% 
+  rvest::html_nodes('div.js-adaptive-photo') %>% 
+  as.character() %>%
+strsplit(split = "\\ ") %>% 
+     unlist() 
+```
+From the output above, we can see that there are two elements `5` and `12` that 
+has the image download link that we are interested. I am going to use the 5th element 
+to extract the link. The complete code for the url we chose is as follows:
+
+```{r}
+url %>% 
+  read_html() %>% 
+  rvest::html_nodes('div.js-adaptive-photo') %>% 
+  as.character() %>%
+strsplit(split = "\\ ") %>% 
+     unlist() %>% 
+    .[5] %>%
+    gsub(pattern = "data-image-url", replacement = "") %>%
+    gsub(pattern = "\\=", replacement = "") %>%
+    gsub(pattern = '\"', replacement = "")
+```
+We got the link that we were looking for. 
+
+### Extracting image links for all elements 
+
+We figured out how to extract the link for 1 instance. Let's use the R `sapply` 
+function and generalize the above procedure and write a code to download all 16 images.
+
+```{r, eval=FALSE}
+# Use rvest to process the image
+sapply(1:nrow(machine_learning), function(x) 
+  machine_learning$url[x] %>% 
+    as.character() %>%
+    # Read URL using rvest function read_html
+    xml2::read_html() %>% 
+    rvest::html_nodes('div.js-adaptive-photo') %>% 
+    as.character() %>% 
+    strsplit(split = "\\ ") %>% 
+    unlist() %>% 
+    .[5] %>% 
+    gsub(pattern = "data-image-url", replacement = "") %>% 
+    gsub(pattern = "\\=", replacement = "") %>% 
+    gsub(pattern = '\"', replacement = "") %>% 
+    download.file(destfile = paste0(
+      "machine_learning/",machine_learning$name[x], ".png"
+    ), mode = 'wb'))
+```
+
+I will have to do some research to find out previous flash cards. He might have posted 
+the images without the link to his website. 

@@ -1,0 +1,36 @@
+---
+title: Welcome to my page
+author: ~
+date: '2017-11-15'
+slug: about
+categories: []
+tags: []
+---
+
+I am a water resources / environmental engineer currently working in Dynamic Solutions International LLC in Edmonds, WA. I completed my PhD from Auburn University in 2014 and completed masters in Civil Engineering (MCE) from Auburn University in Summer 2012. During my PhD in Auburn, I worked on number of projects that required **numerical modeling, data analysis, data munging, data visualization and machine learning**. 
+
+I am a passionate scientist who loves explaining data science / data visualization to non-technical business audiences.
+
+## Data Science Certifications
+
+### Coursera Certifications
+
+1. **Data Analysis** by Jeff Leek from John Hopkins University. Certificate earned on March 22, 2013. [See Certificate](/coursera_data-analysis_2013.pdf)
+2. **Hadoop Platform and Application Framework** by University of California, San Diego on Coursera. Certificate earned on November 8, 2017. [See Certificate](https://www.coursera.org/account/accomplishments/certificate/ZCGQY78573EE)
+3. **Applied Machine Learning in Python** by University of Michigan on Coursera. Certificate earned on November 14, 2017.[See Certificate](https://www.coursera.org/account/accomplishments/certificate/HZCZSCN935H9)
+4. **Getting and Cleaning Data** by John Hopkins University on Coursera. Certificate earned on November 19, 2017. [See Certificate](https://www.coursera.org/account/accomplishments/certificate/N7XKL4FNPM49)
+5. **Neural Networks and Deep Learning** by deeplearning.ai on Coursera. Instructor Andrew Ng. Cerfiticate earned on November 22, 2017. [See Certificate](https://www.coursera.org/account/accomplishments/certificate/KWHYWNZM4ZP6)
+6. **Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization**by deeplearning.ai on Coursera. Instructor 
+Andrew Ng. Certificate earned on December 1, 2017. [See Certificate](https://www.coursera.org/account/accomplishments/certificate/PGV68NUS9CW7)
+
+### Data Camp Certifications
+* **Sentiment Analysis in R: The tidy Way Course** by Julia Silge on DataCamp. [Certificate URL](https://www.datacamp.com/statement-of-accomplishment/course/2cd9bf4f0f0fd6eff63127e196610a14610b8b61)
+* **Intro to SQL for Data Science** on DataCamp. [Certificate URL](https://www.datacamp.com/statement-of-accomplishment/course/f195cb2bdcc5b078ad8b7a50d86c06f0f34b2339)
+* **Introduction to Time Series Analysis**. [Certificate URL](https://www.datacamp.com/statement-of-accomplishment/course/8077bbacc7dc790d8f02e0c4c53c72f52cd4d769)
+* **Foundations of Probability in R** by David Robinson. [Certificate URL](https://www.datacamp.com/statement-of-accomplishment/course/106d347a2e29176bed79409ace9a094d6550545a)
+
+## Contact me: 
+
+* [Email](mailto::janesh.devkota@gmail.com)
+* [LinkedIn](https://www.linkedin.com/in/janesh-devkota-b3b60644/)
+* [Twitter](https://www.twitter.com/janeshdev)

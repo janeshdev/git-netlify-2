@@ -1,0 +1,56 @@
+---
+title: Publications / Presentations / Project Experience
+author: ~
+date: '2017-11-15'
+slug: publications
+categories: []
+tags: []
+---
+
+## Publications
+* **Devkota, J.**, Fang, X., and Fang, V. Z. (2013). "Response characteristics of Perdido and Wolf Bay system to inflows and sea level rise." British Journal of Environment and Climate Change, 3(2), 229-256.
+* **Devkota, J.**, and Fang, X. (2014). "Numerical simulation of flow dynamics in a tidal river under various upstream hydrologic conditions." Hydrological Sciences Journal, 1-24.
+* **Devkota, J.**, and Fang, X. (2015). "Quantification of Water and Salt Exchanges in a Tidal Estuary." Water, 7(5), 1769-1791.
+* Chen, G., Fang, X., and **Devkota, J.** (2015). "Understanding flow dynamics and density currents in a river-reservoir system under upstream reservoir releases." Hydrological Sciences Journal,
+
+## Presentations 
+
+* KC Manoj, Janesh Devkota, and X. Fang, 2010.  “Computing Critical and Normal Depths for Eight Types of Cross‐Section Using Excel Spreadsheet.” Proceeding (CD‐ROM) for 2010 World Environmental and Water Resources Congress, Providence, Rhode Island, May 16‐21, 2010.
+
+* Janesh Devkota, Xing Fang, William Garrett, and Jonathan B. Ponstein, in 2011 (the 25th annual) Alabama Water Resources Conference, “Thermal discharge modeling in Mobile River using 3D hydrodynamic model EFDC”, oral presentation, Orange Beach, AL, September 7–9, 2011
+
+* Janesh Devkota, Xing Fang, William Garrett, and Jonathan B. Ponstein, for the Third Thermal Ecology and Regulation Workshop, “Advantages and Challenges of Thermal Discharge Modeling in Rivers Using Three Dimensional Hydrodynamic and Temperature Models”, oral presentation, October 11–12, 2011, Maple Grove, MN
+
+* Devkota, J., & Fang, X. Age of Water and Salt Exchange in the Perdido and Wolf Bay System. In World Environmental and Water Resources Congress 2014@ Water Without Borders (pp. 1292-1301). ASCE.
+
+
+## RESEARCH /PROJECT EXPERIENCE: 
+
+### Oldman River In-Stream Water Quality Model, Canada
+Junior Consultant for model development, calibration and sensitivity testing for the Oldman River water quality model. Assisted in the preparation of a detailed report documenting the EFDC model development, including hydrodynamic calibration, macrophyte calibration, epilithic algae calibration, temperature calibration, water quality calibration, dissolved oxygen calibration, bacteria calibration. Sensitivity and uncertainty analysis were also performed. 
+Client: Alberta Environment and Sustainable Resources Development, Edmonton, Alberta
+
+### Little Bow River In-Stream Water Quality Model, Canada
+Consultant for model development, calibration and sensitivity testing for the Little Bow River water quality model. Calibrated hydrodynamic, water quality (macrophyte, epilithic algae, temperature, dissolved oxygen etc) and performed sensitivity and uncertainty analysis on various water quality boundary conditions. 
+Client: Alberta Environment and Parks
+
+### Hydrodynamic and Sediment transport model of NewTown Creek 
+Worked as a reviewer for the hydrodynamic and sediment transport modeling using EFDC model in NewTown Creek. Tasks included data analysis, performance, calibration and verification of the model. Collaborated and developed strategic plans for remedial investigation (RI) and feasibility study (FS). 
+
+### Hydrodynamic Modeling of Lay Reservoir, Alabama
+Worked as a consultant for model calibration and sensitivity study on Lay Reservoir, Alabama. 
+
+### Hydrologic and Hydrodynamic modeling of Wolf Bay and Perdido Bay
+Research associate for the development of hydrologic and hydrodynamic modeling of Wolf Bay and Perdido Bay as a part of the project “Impacts of human activities and climate change on water resources and ecosystem health in the Wolf Bay Basin: A Coastal Diagnostic and Forecast System (CDFS) for integrated assessment”. Developed LSPC model for hydrologic modeling and EFDC model for hydrodynamic modeling to support the CDFS system.
+  
+### Hydrodynamic-hydrothermal modeling of Mobile River, and Greene County power plant
+Worked as a researcher during PhD program in Auburn University. Developed hydrodynamic-hydrothermal model to simulate flow patterns and temperature distributions due to plant Greene County in Black Warrior River between Selden Lock and Dam (L&D) and Demopolis L&D. 
+
+### Flow and travel time and Density Current Study in Black Warrior River.
+Black Warrior River bounded by Lewis Smith Lake and Bankhead Lock and Dam is a complex system where density current is formed due to the release of cold water from the upstream (Smith Lake) for the support of the power plant operation of plant Gorgas. Developed HECRAS model and EFDC model to understand the density current under different flow conditions from the upstream reservoir. 
+
+### Hydrologic and hydrodynamic modeling of Black Warrior River 
+Worked as a research assistant and used WARMF and BASINS hydrological modeling tools to understand and estimate the flow, and temperature time series from the surrounding sub-basins to the Black Warrior River to support the hydrologic and hydrodynamic modeling of Black Warrior River. I developed EFDC hydrodynamic model incorporating all the inflows from the tributaries, sub-basins, and power plant (Gorgas) intake and discharge to estimate the flow release patterns from the upstream reservoir to optimize the power plant operation. 
+
+
+

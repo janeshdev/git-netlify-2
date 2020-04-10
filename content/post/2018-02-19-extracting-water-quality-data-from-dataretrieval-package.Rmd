@@ -1,0 +1,89 @@
+---
+title: Extracting water quality data from DataRetrieval Package
+author: ~
+date: '2018-02-19'
+slug: extracting-water-quality-data-from-dataretrieval-package
+categories: []
+tags: []
+---
+
+In this blog post, I will be showing some capabilities of `dataRetrieval` package
+by USGS to extract water quality data. 
+
+To install the `dataRetrieval` package use the following command:
+
+```{r, eval=FALSE}
+devtools::install_github(repo = "USGS-R/dataRetrieval")
+```
+
+The main function I will be discussing is `readWQPdata`. The users can search the data 
+using various options as shown below:
+
+* bBox = Bounding box that uses the coordinates of lower left corner and upper right corner
+* lat / long = lat / long will be specified by the user if they are interested to 
+see if any data is available within radial distance. 
+* countycode 
+* startDate: 
+* endDate: 
+* characteristicType
+* characteristicName : CharacteristicName can be one of following
+
+```{r, echo=FALSE}
+library(dplyr)
+library(dataRetrieval)
+temp <- read.table(text = "Conductivity
+Turbidity
+Alkalinity, total
+Biochemical oxygen demand, standard conditions
+Chloride
+Chemical oxygen demand
+Hardness, Ca, Mg
+Inorganic nitrogen (nitrate and nitrite)
+Total dissolved solids
+Kjeldahl nitrogen
+Phosphorus
+Total suspended solids
+Temperature, air
+Temperature, water
+pH
+Dissolved oxygen (DO)
+Weather condition (WMO code 4501) (choice list)
+Cadmium
+Cyanide
+Chromium
+Copper
+Fecal Coliform
+Iron
+Manganese
+Lead
+Phenol
+Organic Nitrogen
+Aluminum
+Arsenic
+Mercury
+Ammonia-nitrogen
+Silver
+Nickel
+Zinc
+Depth, bottom
+RBP Water Odors (choice list)
+RBP Water Surface Oils (choice list)
+Chlorophyll a
+Orthophosphate
+Specific conductance
+Antimony
+Selenium
+Thallium
+Calcium
+Magnesium
+Escherichia coli
+Dissolved oxygen saturation
+Depth, data-logger (non-ported)
+Light attenuation, depth at 99%
+Depth, Secchi disk depth
+Flow, stream stage (choice list)", sep = "\n", header = F) %>% 
+  knitr::kable()
+```
+
+The tutorial for dataRetrieval can be accessed at 
+`https://owi.usgs.gov/R/dataRetrieval.html#1`

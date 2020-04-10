@@ -1,0 +1,126 @@
+---
+title: Spatial data and coordinate transformation in R
+author: ~
+date: '2017-12-19'
+slug: spatial-analysis-and-coordinate-transformation-in-r
+thumbnailImagePosition: left
+thumbnailImage: "https://snag.gy/cYuDWw.jpg"
+categories: []
+tags: []
+---
+
+I come to these situations where I have to work with spatial datasets frequently. 
+Sometimes the datasets is in lat-long format and sometimes on `UTM` (Universal 
+transverse Mercator) coordinate or 
+`state plane coordinate system`. 
+
+I extensively use `EFDC` (Environmental Fluid
+Dynamic Code) model to do environmental modeling and have to convert the data 
+into UTM coordinate system. I had used CORPSCON in the past but as an R enthusiast
+I wanted to dig deeper in R and finad a way to do the transformation in R environment. 
+Thankfully, I figured out that if we use the packages `sp`, `rgdal`, and `raster`, we 
+can be able to convert the dataset (tiff or any x, y, z file) into 
+lat-long / eastings-northings format. 
+
+
+# Data download 
+
+To demonstrate the spatial transformation feature, we will be using the Lake Victoria 
+dataset. Let's go ahead and download lake victoria bathymetry data from `Harvard` using 
+this [link](https://dataverse.harvard.edu/file.xhtml;jsessionid=11d6e23005e3e8e991b3dca35921?fileId=3074951&version=RELEASED&version=.0)
+
+I have saved tehe data as `LV_Bathy_V6_1.tif` and the size of the file is `48.9 MB`.
+If you want to download the data with R uncomment the first couple lines in the 
+code below. 
+
+Please install the packages if you don't have these packages in your machine. 
+You can use `install.packages(c("raster", "sp", "rgdal"))` to bulk download the 
+packages. 
+
+```{r setup, include=FALSE, comment = ""}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(raster)
+library(sp)
+library(rgdal)
+#download.file(url = "https://dataverse.harvard.edu/api/access/datafile/3074951", 
+#              destfile = "../../data/spatial_analysis/LV_Bathy_V6_1.tif")
+
+filepath <- "../../data/spatial_analysis/LV_Bathy_V6_1.tif"
+victoria <- raster(filepath)
+
+```
+
+Now that we have read the file in a raster `victoria`, let's plot and see how the 
+bathymetry looks like. 
+
+```{r}
+plot(victoria)
+```
+
+In the above figure, you can see that the deeper portion of the lake has dark 
+green shade and the shallow region has grey color contours. 
+
+## Convert raster to points 
+
+The raster dataset can be converted to `SpatialPointsDataFrame` using the 
+`rasterToPoints` function in `raster` package. 
+
+```{r}
+victoria.pts <- raster::rasterToPoints(x = victoria, spatial = TRUE)
+victoria.pts
+```
+
+### Change projection to geographic coordinate system
+
+The projection of the new dataset is `lcc` i.e, Projected Coordinate System: Africa Lambert Conformal Conic. Now, let's 
+go ahead and convert it to geographic coordinate system.
+
+```{r}
+geo.prj <- "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+victoria.pts <- spTransform(victoria.pts, CRS(geo.prj))
+victoria.pts
+```
+
+```{r}
+head(coordinates(victoria.pts))
+```
+
+
+### Create x, y, z dataframe
+
+Now let's create x, y and z dataframe from the transformed data `victoria.pts`. The 
+first column of `victoria.pts` is longitude and second column in latitude. 
+
+```{r}
+victoria.pts@data <- data.frame(victoria.pts@data, long = coordinates(victoria.pts)[,1], 
+                                lat = coordinates(victoria.pts)[,2])
+# View head of the dataset
+head(victoria.pts@data)
+dim(victoria.pts@data)
+```
+
+Let's look at the structure of the dataframe.
+
+```{r}
+str(victoria.pts@data)
+```
+
+If we want to convert lat long to UTM for lake victoria, we can use the following 
+projection 
+
+```{r, eval = FALSE}
+utm.prj <- "+proj=utm +zone=16 ellps=WGS84"
+```
+
+One important thing to remember is that when you are specifying the options for 
+the projection, don't use any spacing. For example if you use the following the 
+program / transformation would throw as error. 
+
+```{r, eval=FALSE}
+# Bad example
+utm.prj <- "+proj = utm +zone = 16 ellps = WGS84"
+```

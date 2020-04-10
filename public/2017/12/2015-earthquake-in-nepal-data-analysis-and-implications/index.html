@@ -1,0 +1,1064 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.66.0 with theme Tranquilpeak 0.4.3-BETA">
+    <title>2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis</title>
+    <meta name="author" content="Janesh Devkota">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="http://janeshdevkota.com/favicon.png">
+    
+
+    
+    <meta name="description" content="In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.">
+    <meta property="og:description" content="In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis">
+    <meta property="og:url" content="/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+    <meta property="og:site_name" content="Janesh Devkota&#39;s Garden">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Janesh Devkota&#39;s Garden">
+    <meta name="twitter:description" content="In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.">
+    
+      <meta name="twitter:creator" content="@janeshdev">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=640">
+    
+
+    
+      <meta property="og:image" content="https://snag.gy/mA34dw.jpg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="http://janeshdevkota.com/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="http://janeshdevkota.com/">Janesh Devkota&#39;s Garden</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="http://janeshdevkota.com/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="http://janeshdevkota.com/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Janesh Devkota</h4>
+        
+          <h5 class="sidebar-profile-bio">Data science enthusiast working as environmental / water resource engineer</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/about/index.html">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/publications/index.html">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Publications</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/janeshdev" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/1877744/janesh-devkota" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/janeshdev" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="http://janeshdevkota.com/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-12-05T00:00:00Z">
+        
+  December 5, 2017
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+<script src="http://janeshdevkota.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="http://janeshdevkota.com/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="http://janeshdevkota.com/rmarkdown-libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="http://janeshdevkota.com/rmarkdown-libs/leaflet/leaflet.js"></script>
+<link href="http://janeshdevkota.com/rmarkdown-libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="http://janeshdevkota.com/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="http://janeshdevkota.com/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="http://janeshdevkota.com/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="http://janeshdevkota.com/rmarkdown-libs/leaflet-binding/leaflet.js"></script>
+
+
+<p>In this blogpost, I am going to take the earthquake data from April 2015 to
+May 2016 throughout the World. Then we will process the data in usable form and
+look at the data on Nepal. Later, we will also dive into the casualties from this
+devastating earthquake. We will look at how many people died, got injured from
+which district, using ggplot2, wordcloud and leaflet package.</p>
+<p>Let’s get going.</p>
+<p>First let’s load the libraries that we will be using.</p>
+<pre class="r"><code>library(tidyverse)
+library(leaflet)
+library(lubridate)
+library(tidyr)
+library(wordcloud)
+library(visdat)
+library(scales)
+library(knitr)</code></pre>
+<p>We will be using the data from Asheshwor’s github repository <a href="https://github.com/asheshwor/np-quake" class="uri">https://github.com/asheshwor/np-quake</a>
+The file we will be using is <code>all_month_merged.csv</code>. I have downloaded the csv
+file and saved into my <code>data</code> folder. Now let’s read the data.</p>
+<pre class="r"><code># Analyzing Nepal earthquake data 
+all_month &lt;- read.csv(file = &quot;../../data/earthquake/all_month_merged.csv&quot;, 
+                      stringsAsFactors = FALSE)
+str(all_month)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    81699 obs. of  15 variables:
+##  $ time     : chr  &quot;2016-05-29T08:27:33.350Z&quot; &quot;2016-05-29T06:45:59.910Z&quot; &quot;2016-05-29T06:34:13.930Z&quot; &quot;2016-05-29T05:58:39.120Z&quot; ...
+##  $ latitude : num  32 36.1 -20.5 10.6 36.3 ...
+##  $ longitude: num  -115.21 70.81 -63.24 -40.99 3.51 ...
+##  $ depth    : num  1.42 92.05 562.89 10 10 ...
+##  $ mag      : num  3.61 4.5 4.3 5 4.2 4.4 2.6 3.3 4.2 2.7 ...
+##  $ magType  : chr  &quot;mlr&quot; &quot;mb&quot; &quot;mb&quot; &quot;mb&quot; ...
+##  $ nst      : int  22 NA NA NA NA NA NA NA NA NA ...
+##  $ gap      : num  262 81 43 43 96 77 59 31 91 NA ...
+##  $ dmin     : num  0.302 1.622 5.198 17.105 3.842 ...
+##  $ rms      : num  0.41 0.78 0.9 0.73 1.16 1.02 0.44 0.33 0.76 0.54 ...
+##  $ net      : chr  &quot;ci&quot; &quot;us&quot; &quot;us&quot; &quot;us&quot; ...
+##  $ id       : chr  &quot;ci37577944&quot; &quot;us20005z01&quot; &quot;us20005yzy&quot; &quot;us20005yzt&quot; ...
+##  $ updated  : chr  &quot;2016-05-29T08:30:05.446Z&quot; &quot;2016-05-29T07:21:17.154Z&quot; &quot;2016-05-29T06:51:56.741Z&quot; &quot;2016-05-29T06:23:30.881Z&quot; ...
+##  $ place    : chr  &quot;23km S of Alberto Oviedo Mota, B.C., MX&quot; &quot;4km NE of `Alaqahdari-ye Kiran wa Munjan, Afghanistan&quot; &quot;9km SSE of Boyuibe, Bolivia&quot; &quot;Northern Mid-Atlantic Ridge&quot; ...
+##  $ type     : chr  &quot;earthquake&quot; &quot;earthquake&quot; &quot;earthquake&quot; &quot;earthquake&quot; ...</code></pre>
+<p>Let’s visualize our unprocessed data using <code>visdat</code> package:</p>
+<pre class="r"><code>visdat::vis_dat(all_month, palette = &quot;qual&quot;, sort_type = FALSE, warn_large_data = FALSE)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>It is a really nice way to see our variables and observations in a graphical form.
+We can see that variables <code>nst</code>, <code>gap</code>, and <code>dmin</code> have a lot of missing data.</p>
+<p>Let’s look at head of the dataset:</p>
+<pre class="r"><code>head(all_month)</code></pre>
+<pre><code>##                       time latitude longitude  depth  mag magType nst gap
+## 1 2016-05-29T08:27:33.350Z  32.0230 -115.2117   1.42 3.61     mlr  22 262
+## 2 2016-05-29T06:45:59.910Z  36.0551   70.8097  92.05 4.50      mb  NA  81
+## 3 2016-05-29T06:34:13.930Z -20.4974  -63.2433 562.89 4.30      mb  NA  43
+## 4 2016-05-29T05:58:39.120Z  10.6169  -40.9928  10.00 5.00      mb  NA  43
+## 5 2016-05-29T05:23:10.660Z  36.2786    3.5091  10.00 4.20      mb  NA  96
+## 6 2016-05-29T05:10:48.040Z  20.4756  120.3505  10.00 4.40      mb  NA  77
+##      dmin  rms net         id                  updated
+## 1  0.3019 0.41  ci ci37577944 2016-05-29T08:30:05.446Z
+## 2  1.6220 0.78  us us20005z01 2016-05-29T07:21:17.154Z
+## 3  5.1980 0.90  us us20005yzy 2016-05-29T06:51:56.741Z
+## 4 17.1050 0.73  us us20005yzt 2016-05-29T06:23:30.881Z
+## 5  3.8420 1.16  us us20005yzj 2016-05-29T06:12:24.532Z
+## 6  2.4270 1.02  us us20005yzh 2016-05-29T05:42:19.667Z
+##                                                   place       type
+## 1               23km S of Alberto Oviedo Mota, B.C., MX earthquake
+## 2 4km NE of `Alaqahdari-ye Kiran wa Munjan, Afghanistan earthquake
+## 3                           9km SSE of Boyuibe, Bolivia earthquake
+## 4                           Northern Mid-Atlantic Ridge earthquake
+## 5                         14km W of Ain Bessem, Algeria earthquake
+## 6                       159km W of Sabtang, Philippines earthquake</code></pre>
+<p>We can see that our <code>time</code> column in not is <code>data</code> or <code>POSIXct</code> format. Let’s go
+a head and fix that date format and add couple variables <code>year</code> and <code>month</code>.</p>
+<pre class="r"><code>all_month &lt;- all_month %&gt;% 
+  # Add a new column named date
+  mutate(date = gsub(time, pattern = &quot;T&quot;, replacement = &quot; &quot;) %&gt;% 
+           gsub(., pattern = &quot;.[0-9]+Z&quot;, replacement = &quot;&quot;) %&gt;% 
+           ymd_hms(.))
+
+# Examine head with new variables
+all_month %&gt;% select(time, latitude,longitude, place, date) %&gt;% head()</code></pre>
+<pre><code>##                       time latitude longitude
+## 1 2016-05-29T08:27:33.350Z  32.0230 -115.2117
+## 2 2016-05-29T06:45:59.910Z  36.0551   70.8097
+## 3 2016-05-29T06:34:13.930Z -20.4974  -63.2433
+## 4 2016-05-29T05:58:39.120Z  10.6169  -40.9928
+## 5 2016-05-29T05:23:10.660Z  36.2786    3.5091
+## 6 2016-05-29T05:10:48.040Z  20.4756  120.3505
+##                                                   place                date
+## 1               23km S of Alberto Oviedo Mota, B.C., MX 2016-05-29 08:27:33
+## 2 4km NE of `Alaqahdari-ye Kiran wa Munjan, Afghanistan 2016-05-29 06:45:59
+## 3                           9km SSE of Boyuibe, Bolivia 2016-05-29 06:34:13
+## 4                           Northern Mid-Atlantic Ridge 2016-05-29 05:58:39
+## 5                         14km W of Ain Bessem, Algeria 2016-05-29 05:23:10
+## 6                       159km W of Sabtang, Philippines 2016-05-29 05:10:48</code></pre>
+<p>Next thing we are going to fix is the place column. In this column, the text before
+comma is the information about the place and text after comma is the information
+about country / state. Let’s us now separate this string into two columns.</p>
+<pre class="r"><code>all_month$country &lt;- 
+  as.character(lapply(1:nrow(all_month), 
+                      FUN = function(x) 
+                        tail(strsplit(all_month$place[x], 
+                                      split = &quot;,&quot;)[[1]],n=1L)))
+
+# Remove all the white spaces from column country
+all_month$country &lt;- gsub(&quot;[[:space:]]&quot;, &quot;&quot;, x = all_month$country)</code></pre>
+<p>I also remove the starting and trailing spaces on my <code>country</code> column.</p>
+<p>Let’s examine our data frame again with few columns. The reason I am taking only
+few columns to display is to save some space.</p>
+<pre class="r"><code>all_month %&gt;% select(date, latitude, longitude, country) %&gt;% head()</code></pre>
+<pre><code>##                  date latitude longitude                   country
+## 1 2016-05-29 08:27:33  32.0230 -115.2117                        MX
+## 2 2016-05-29 06:45:59  36.0551   70.8097               Afghanistan
+## 3 2016-05-29 06:34:13 -20.4974  -63.2433                   Bolivia
+## 4 2016-05-29 05:58:39  10.6169  -40.9928 NorthernMid-AtlanticRidge
+## 5 2016-05-29 05:23:10  36.2786    3.5091                   Algeria
+## 6 2016-05-29 05:10:48  20.4756  120.3505               Philippines</code></pre>
+<pre class="r"><code># Total number of unique countries
+length(unique(all_month$country))</code></pre>
+<pre><code>## [1] 283</code></pre>
+<p>There are data of 286 countries.</p>
+<p>We will now add <code>day</code>, and <code>month</code> columns to <code>all_month</code> dataframe.</p>
+<pre class="r"><code># Add month, day, and julian 
+all_month &lt;- all_month %&gt;% 
+  mutate(day = day(date), 
+         month = month(date), 
+         julian = julian(date, origin = ymd(&quot;2015-01-01&quot;)) %&gt;% 
+           floor() %&gt;% as.numeric())</code></pre>
+<div id="create-a-dataframe-for-country-nepal-by-using-dplyr-function-filter" class="section level1">
+<h1>Create a dataframe for country Nepal by using <code>dplyr</code> function <code>filter</code></h1>
+<pre class="r"><code># Now filter for the country Nepal
+nepal_data &lt;- all_month %&gt;% dplyr::filter(country == &quot;Nepal&quot;)
+head(nepal_data)</code></pre>
+<pre><code>##                       time latitude longitude depth mag magType nst gap  dmin
+## 1 2016-05-28T09:39:10.980Z  28.0134   85.4281 10.00 4.7      mb  NA  74 0.315
+## 2 2016-05-23T19:09:53.080Z  27.7400   85.0803 10.00 4.3      mb  NA  87 0.210
+## 3 2016-05-14T22:45:55.410Z  27.8199   85.3181 22.48 4.3      mb  NA  88 0.107
+## 4 2016-05-13T23:20:59.460Z  27.9580   85.5191 10.00 4.0      mb  NA 104 0.303
+## 5 2016-05-11T01:19:42.350Z  27.9478   84.9271 10.54 4.5      mb  NA 104 0.416
+## 6 2016-04-12T14:41:52.170Z  27.6062   86.0621 10.00 4.3      mb  NA 146 0.670
+##    rms net         id                  updated                       place
+## 1 1.40  us us20005ysr 2016-05-28T10:34:15.107Z 34km NNW of Nagarkot, Nepal
+## 2 0.91  us us10005jdi 2016-05-25T22:03:19.651Z 20km WNW of Kirtipur, Nepal
+## 3 0.43  us us10005hgq 2016-05-14T23:42:39.975Z  13km N of Kathmandu, Nepal
+## 4 0.82  us us10005ivg 2016-05-27T03:54:54.132Z   26km N of Nagarkot, Nepal
+## 5 1.01  us us10005ihi 2016-05-26T00:48:30.120Z  45km NW of Kirtipur, Nepal
+## 6 0.93  us us20005heg 2016-05-11T14:54:32.777Z  31km N of Ramechhap, Nepal
+##         type                date country day month julian
+## 1 earthquake 2016-05-28 09:39:10   Nepal  28     5    513
+## 2 earthquake 2016-05-23 19:09:53   Nepal  23     5    508
+## 3 earthquake 2016-05-14 22:45:55   Nepal  14     5    499
+## 4 earthquake 2016-05-13 23:20:59   Nepal  13     5    498
+## 5 earthquake 2016-05-11 01:19:42   Nepal  11     5    496
+## 6 earthquake 2016-04-12 14:41:52   Nepal  12     4    467</code></pre>
+<p>Let’s quickly plot the latitude,longitude and magnitude using ggplot:</p>
+<pre class="r"><code>ggplot(nepal_data) + geom_point(aes(longitude, latitude, color = mag)) + 
+  scale_color_continuous(low = &quot;red&quot;, high = &quot;blue&quot;)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>The devastating earthquake occurred on 2015-04-25 in Nepal. So, let’s examine
+the earthquake for that particular day.</p>
+<pre class="r"><code># Total number of earthquakes on April 25th 
+nepal_data %&gt;% dplyr::filter(date &gt; as.POSIXct(&quot;2015-04-24 23:59:59&quot;, tz = &quot;UTC&quot;), 
+                             date &lt; as.POSIXct(&quot;2015-04-26 00:00:00&quot;, tz = &quot;UTC&quot;)) %&gt;% 
+  select(date, mag, place) %&gt;%
+  summary() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">date</th>
+<th align="center">mag</th>
+<th align="center">place</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td align="center">Min. :2015-04-25 06:11:26</td>
+<td align="center">Min. :4.200</td>
+<td align="center">Length:33</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">1st Qu.:2015-04-25 07:47:01</td>
+<td align="center">1st Qu.:4.500</td>
+<td align="center">Class :character</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">Median :2015-04-25 09:30:29</td>
+<td align="center">Median :4.800</td>
+<td align="center">Mode :character</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Mean :2015-04-25 11:50:21</td>
+<td align="center">Mean :4.897</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td align="center">3rd Qu.:2015-04-25 13:36:14</td>
+<td align="center">3rd Qu.:5.000</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td></td>
+<td align="center">Max. :2015-04-25 23:41:52</td>
+<td align="center">Max. :7.800</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Earthquake actually occurred 33 times and the magnitude of earthquake varied from
+4.2 to 7.8 richter. The energy released from earthquake has a exponential relationship
+with the magnitude. Let’s look at the image below from the Geological Society of America,
+of earthquake magnitudes and the equivalent energy release.</p>
+<div class="figure">
+<img src="https://farm7.static.flickr.com/6047/6281543096_f1a8a29fe7.jpg" alt="Earthquake" />
+<p class="caption">Earthquake</p>
+</div>
+<div id="boxplot-from-april-25th-to-april-30th-2015" class="section level2">
+<h2>Boxplot from April 25th to April 30th, 2015</h2>
+<p>Let’s plot the boxplot for days from April 25th to April 30th.</p>
+<pre class="r"><code>nepal_data %&gt;% 
+  dplyr::filter(date &gt; as.POSIXct(&quot;2015-04-1 00:00:00&quot;, tz = &quot;UTC&quot;), 
+                date &lt; as.POSIXct(&quot;2015-04-30 23:59:00&quot;, tz = &quot;UTC&quot;)) %&gt;% 
+  ggplot() + 
+  geom_boxplot(aes(date, mag, group = day)) </code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="visualizing-the-locations-on-the-map-using-leaflet-package" class="section level2">
+<h2>Visualizing the locations on the map using leaflet package</h2>
+<p>We will now look into the leaflet package and plot the exact locations using
+latitude, longitude and magnitude of the earthquake.</p>
+<pre class="r"><code>nepal_data2 &lt;- nepal_data %&gt;% 
+  dplyr::filter(date &gt; as.POSIXct(&quot;2015-04-24 23:59:59&quot;, tz = &quot;UTC&quot;), 
+                date &lt; as.POSIXct(&quot;2015-04-26 00:00:00&quot;, tz = &quot;UTC&quot;))
+
+# Following two lines of code were borrowed from Asheshwor&#39;s np-quake repository
+nepal_data2$size &lt;- cut(nepal_data2$mag, 
+                        c(2, 3.9, 4.9, 5.9, 6.9, 7.9), 
+                        labels = c(&quot;3.3 to 3.9&quot;, &quot;&gt;3.9 to 4.9&quot;, &quot;&gt;4.9 to 5.9&quot;, &quot;&gt;5.9 to 6.9&quot;, &quot;&gt;6.9 to 7.9&quot; ))
+
+pallet &lt;- colorFactor(c(&quot;gray32&quot;, &quot;dodgerblue4&quot;,  &quot;slateblue4&quot;, &quot;purple&quot;, &quot;firebrick1&quot;),
+                      domain = c(&quot;3.3 to 3.9&quot;, &quot;&gt;3.9 to 4.9&quot;, &quot;&gt;4.9 to 5.9&quot;, &quot;&gt;5.9 to 6.9&quot;, &quot;&gt;6.9 to 7.9&quot;))
+
+library(leaflet)
+#pal &lt;- colorQuantile(palette = &quot;YlOrRd&quot;, domain = nepal_data2$mag)
+
+m &lt;- leaflet(options = leafletOptions(miniZoom =8, maxZoom = 8), 
+             #width = &quot;100%&quot;, 
+             data = nepal_data2) %&gt;% 
+  addTiles() %&gt;% # Add default OpenStreetMap map tiles
+  leaflet::addCircleMarkers(lng = ~longitude, 
+                            lat = ~latitude, 
+                            stroke = FALSE, 
+                            fillOpacity = 0.8,
+                            fillColor = ~pallet(size),
+                            label = paste(&quot;mag=&quot;, nepal_data2$mag,
+                                          &quot;\n&quot;, &quot;location = &quot;,
+                                          nepal_data2$place)
+                            ) %&gt;% 
+        addLegend(
+        &quot;bottomleft&quot;, pal = pallet,
+        values = sort(nepal_data2$size),
+        title = &quot;Magnitude&quot;
+        # labFormat = labelFormat()
+      )
+m</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"options":{"maxZoom":8,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"miniZoom":8},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[27.5598,27.8052,27.5606,27.732,27.5632,27.6781,27.9087,27.5843,27.7476,28.1078,28.1513,28.0049,28.0438,27.7719,27.5667,27.8732,27.9938,27.8741,27.6364,27.7579,27.9903,27.9528,27.6733,27.7307,27.8549,27.6659,28.002,27.5458,27.7278,27.91,28.1927,27.7239,28.1473],[85.9359,84.8744,86.0062,85.7266,85.7583,85.3739,85.6175,85.6622,85.89,85.0726,84.6587,85.5638,85.4854,85.8701,85.8384,85.762,85.437,85.3069,85.5029,84.8874,84.7097,85.7219,85.6878,85.7304,85.5572,85.7483,85.2694,85.5502,85.9185,85.6501,84.8645,85.8182,84.7079],10,null,null,{"interactive":true,"className":"","stroke":false,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":["#525252","#104E8B","#525252","#525252","#525252","#525252","#525252","#525252","#525252","#525252","#104E8B","#525252","#525252","#525252","#525252","#525252","#104E8B","#525252","#104E8B","#525252","#104E8B","#525252","#525252","#525252","#104E8B","#525252","#525252","#525252","#104E8B","#104E8B","#473C8B","#104E8B","#A020F0"],"fillOpacity":0.8},null,null,null,null,["mag= 4.5 \n location =  29km NNW of Ramechhap, Nepal","mag= 5.6 \n location =  41km WNW of Kirtipur, Nepal","mag= 4.3 \n location =  27km NNW of Ramechhap, Nepal","mag= 4.7 \n location =  20km E of Nagarkot, Nepal","mag= 4.4 \n location =  24km E of Panaoti, Nepal","mag= 4.2 \n location =  5km ESE of Kathmandu, Nepal","mag= 4.9 \n location =  23km NNE of Nagarkot, Nepal","mag= 4.6 \n location =  14km E of Panaoti, Nepal","mag= 4.6 \n location =  23km SSW of Kodari, Nepal","mag= 4.6 \n location =  51km NNW of Kathmandu, Nepal","mag= 5.2 \n location =  29km ESE of Lamjung, Nepal","mag= 4.5 \n location =  32km N of Nagarkot, Nepal","mag= 4.2 \n location =  36km N of Nagarkot, Nepal","mag= 4.4 \n location =  21km SSW of Kodari, Nepal","mag= 4.8 \n location =  32km E of Panaoti, Nepal","mag= 4.2 \n location =  20km WSW of Kodari, Nepal","mag= 5 \n location =  31km NNW of Nagarkot, Nepal","mag= 4.9 \n location =  19km N of Kathmandu, Nepal","mag= 5.3 \n location =  1km WNW of Banepa, Nepal","mag= 4.4 \n location =  39km NNW of Hitura, Nepal","mag= 5 \n location =  41km SE of Lamjung, Nepal","mag= 4.7 \n location =  22km W of Kodari, Nepal","mag= 4.9 \n location =  17km ENE of Banepa, Nepal","mag= 4.6 \n location =  20km E of Nagarkot, Nepal","mag= 5 \n location =  15km NNE of Nagarkot, Nepal","mag= 4.5 \n location =  22km E of Banepa, Nepal","mag= 4.8 \n location =  33km N of Kathmandu, Nepal","mag= 4.8 \n location =  5km SE of Panaoti, Nepal","mag= 5 \n location =  25km S of Kodari, Nepal","mag= 5.5 \n location =  25km NNE of Nagarkot, Nepal","mag= 6.6 \n location =  49km E of Lamjung, Nepal","mag= 5.1 \n location =  28km SSW of Kodari, Nepal","mag= 7.8 \n location =  34km ESE of Lamjung, Nepal"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#525252","#104E8B","#473C8B","#A020F0"],"labels":[">3.9 to 4.9",">4.9 to 5.9",">5.9 to 6.9",">6.9 to 7.9"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"bottomleft","type":"factor","title":"Magnitude","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[27.5458,28.1927],"lng":[84.6587,86.0062]}},"evals":[],"jsHooks":[]}</script>
+<div id="monthwise-box-plot-of-earthquake-magnitude" class="section level3">
+<h3>Monthwise box plot of earthquake magnitude</h3>
+<pre class="r"><code>give.n &lt;- function(x){
+  return(c(y = mean(x), label = length(x)))
+}
+
+# Nepal monthwise box plot
+nepal_data %&gt;% 
+  dplyr::filter(date &gt; ymd_hms(&quot;2015-01-01 00:00:00&quot;), 
+                  date &lt; ymd_hms(&quot;2016-01-01 00:00:00&quot;)) %&gt;% 
+  ggplot(aes(cut(date, breaks=&quot;month&quot;), mag)) + geom_boxplot() +
+  stat_summary(fun.data = give.n, geom = &quot;text&quot;, hjust = -0.5, color = &quot;blue&quot;) + 
+  xlab(&quot;Date&quot;) + ylab(&quot;Magnitude&quot;)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Note that I have used <code>give.n</code> function to print the total number of earthquake
+occurrences each month. Note that the dataset has the data only from April 25. So
+the acutal number of total occurrences for the month of April 2015 would be
+higher. <strong>This 7.8 richter earthquake caused the death of around 9000 people. </strong></p>
+</div>
+</div>
+</div>
+<div id="casualies-by-earthquake" class="section level1">
+<h1>Casualies by Earthquake</h1>
+<p>Nepal government has made a spreadsheet available that has recorded the casualties
+by district. The data can be accessed on this <a href="https://docs.google.com/spreadsheets/d/1MCsMtcfN8jwGg4qdzYZCKyxpYp8cdqRSrEpF1WpR6ZE/edit#gid=1367273225">page</a></p>
+<p>The name of the spreadsheet is <code>Key Government Figures - Nepal Earthquake - 2015.xlsx</code>
+and we will be using <code>05-June-2015</code> sheet.</p>
+<p>In order to bring this google sheet package into R, we will use the fantastic
+<code>googlesheets</code> package by Jenny Bryan. Let’s bring the data into the R environment.
+I have saved the googlesheet to my google drive and the name of the sheet on my
+drive is <code>JD_Key Government Figures - Nepal Earthquake - 2015.xlsx</code></p>
+<pre class="r"><code># Use library googlesheets to read Nepal earthquake data
+# library(googlesheets)
+# 
+# # Authenticate googlesheets
+# googlesheets::gs_auth()
+# 
+# fatal &lt;- gs_title(x = &quot;JD_Key Government Figures - Nepal Earthquake - 2015.xlsx&quot;)
+# fatalities &lt;- googlesheets::gs_read(ss = fatal, ws = &quot;05-June-2015&quot;)
+library(readxl)
+fatalities &lt;- readxl::read_excel(path = &quot;../../data/earthquake/JD_Key Government Figures - Nepal Earthquake - 2015.xlsx&quot;,sheet = &quot;05-June-2015&quot;)</code></pre>
+<p>We have to use the function <code>gs_auth()</code> first in order to aunthenticate the access
+to our google drive account. Then we can find the googlesheet with the function
+<code>gs_title</code>. After you have brought the googlesheet in R environment, use the function
+<code>gs_read</code> to read that sheet in a dataframe.</p>
+<p>Let’s examine the data structure again using the <code>visdat</code> package.</p>
+<pre class="r"><code># Use visdat to visualize the type of data in a dataframe
+visdat::vis_dat(fatalities, palette = &quot;qual&quot;, sort_type = FALSE)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>visdat::vis_miss(fatalities)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<div id="total-number-of-fatalities-by-district" class="section level2">
+<h2>Total number of fatalities by District</h2>
+<p>In Nepal, there are 75 districts. All the data provided by the goverment is by
+district. We can visualize how many people died, how many got injured, how many
+public and government buildings were damaged by earthquake.</p>
+<div id="total-number-of-deaths-by-district" class="section level3">
+<h3>Total number of deaths by district</h3>
+<pre class="r"><code>fatalities %&gt;% dplyr::filter(!is.na(DIST_ID)) %&gt;% 
+  dplyr::filter(Tot_Deaths &gt; 1) %&gt;% 
+  ggplot() + geom_col(aes(x = reorder(DISTRICT, -Tot_Deaths), 
+                          Tot_Deaths, fill = &quot;red&quot;)) + 
+  xlab(&quot;District&quot;) + ylab(&quot;Total number of deaths&quot;) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        axis.text = element_text(size = 12),
+        legend.position = &quot;&quot;)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>It is clear that the maximum number of people died in Sindhupalchok.</p>
+</div>
+</div>
+<div id="total-number-of-injured-by-district" class="section level2">
+<h2>Total number of injured by District</h2>
+<pre class="r"><code>fatalities %&gt;% dplyr::filter(!is.na(DIST_ID)) %&gt;% 
+  dplyr::filter(Total_Injured &gt; 50) %&gt;% 
+  ggplot() + geom_col(aes(x = reorder(DISTRICT, -Total_Injured), Total_Injured)) + 
+  geom_text(aes(x = DISTRICT, Total_Injured, label = Total_Injured), 
+            vjust = -0.5, color = &quot;blue&quot;) + 
+  xlab(&quot;District&quot;) + ylab(&quot;Total number of Injured People&quot;) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), 
+        axis.text = element_text(size = 12), 
+        axis.title = element_text(size = 14))</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>While the total number of people that died in Sindhupalchowk is highest, the
+highest total number of injured people ocurred in Kathmandu. Part of the reason
+that a lot of people got injured in Kathmandu is because the population in Kathmandu
+is very high compared to other districts. Kathmandu is the capital of Nepal and
+according to this dataset we are looking at the total population was 1744240.</p>
+</div>
+<div id="total-number-of-government-public-buildings-destroyed" class="section level2">
+<h2>Total number of government / Public buildings destroyed</h2>
+<pre class="r"><code>fatalities %&gt;% dplyr::filter(!is.na(DIST_ID)) %&gt;%
+  dplyr::filter(GovtBuild_Damage &gt; 1, PublicBuild_Damage &gt; 1) %&gt;% 
+  dplyr::select(DISTRICT, GovtBuild_Damage, PublicBuild_Damage) %&gt;% 
+  tidyr::gather(key = &quot;variable&quot;, value = &quot;value&quot;, -DISTRICT) %&gt;% 
+  ggplot() + geom_bar(aes(x = reorder(DISTRICT, -value), y = value, 
+                          fill = variable), stat = &quot;identity&quot;) + 
+  facet_wrap( ~ variable, ncol = 1, scale = &quot;free_y&quot;) + 
+  xlab(&quot;DISTRICT&quot;) + ylab(&quot;Number of damaged buildings&quot;) + labs(fill = &quot;&quot;) + 
+  theme(axis.text.x = element_text(angle = 90, hjust =1), 
+        legend.position = &quot;&quot;)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>The earthquake did a lot of damage on government and public buildings throughout
+the country. From this graph, we can see that a lot of public buildings and private
+buildings were damaged in Sindhupalchowk. However, the government buildings damage
+is not proportional to the public building damage in other districts. While lot
+of public buildings got damaged in <code>Nuwakot</code> and <code>Kabrepalanchok</code> the number of
+government buildings got damaged are pretty low. Most of the public houses that
+got damaged in these districts were old houses.</p>
+</div>
+</div>
+<div id="using-wordcloud-package-to-visualize-the-casualties" class="section level1">
+<h1>Using wordcloud package to visualize the casualties</h1>
+<p>Now we are going to look into wordcloud package and plot the districts with higher
+frequency of death, injuries and building damages.</p>
+<p>Let’s look at the number of people who died in the earthquake.</p>
+<p>Before looking into the wordcloud, I am going to create a function which we can
+use for all the data columns. The function that I have written takes the words and
+frequencies and then apply color settings to our words when they are displayed.
+In order to be seen on the word cloud I have specified the minimum frequency to be
+5.</p>
+<pre class="r"><code># Word cloud
+wordcloud_jd &lt;- function(words, freq){
+  wordcloud(words = words,max.words = Inf, freq = freq,  
+            random.order = FALSE, random.color = FALSE, scale = c(5.,.8 ),
+            colors= c(&quot;indianred1&quot;,&quot;indianred2&quot;,&quot;indianred3&quot;,&quot;indianred&quot;), 
+            res = 300, width = 12, height = 10)
+}</code></pre>
+<p>We will now use the function <code>wordcloud_jd</code> to plot total number of people by
+district.</p>
+<div id="word-cloud-of-total-number-of-people-died-by-district" class="section level3">
+<h3>Word cloud of total number of people died by district</h3>
+<pre class="r"><code>wordcloud_jd(words = fatalities$DISTRICT, freq = fatalities$Tot_Deaths)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Looking at the wordcloud, we can see that the maximum number of people died in
+Sindhupalchowk. The second is Kathmandu, and then Nuwakot and so on. That is the
+total number of people died in a district. Now let’s examine if the word cloud is
+consistent for male and female deaths.</p>
+<pre class="r"><code># Word cloud for deaths by male
+wordcloud_jd(words = fatalities$DISTRICT, freq = fatalities$Death_Male)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code># Word cloud for deaths by female
+wordcloud_jd(words = fatalities$DISTRICT, freq = fatalities$Death_Female)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p>From these wordclouds, we can see that maximum number of male and female that died
+is in Sindhupalchok. However, the second highest death for male occurred in Kathmandu
+while the second higest death for female occurred in Nuwakot district.</p>
+</div>
+<div id="word-cloud-of-total-number-of-injured-by-district" class="section level3">
+<h3>Word cloud of total number of injured by district</h3>
+<pre class="r"><code>wordcloud_jd(words = fatalities$DISTRICT, freq = fatalities$Total_Injured)</code></pre>
+<p><img src="http://janeshdevkota.com/post/2017-12-05-2015-earthquake-in-nepal-data-analysis-and-implications_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>While the total number of people that died was higher in Sindhupalchowk, the injured
+number was very high in Kathmandu. Sindhupalchowk is the 4th in terms of total
+number of injured people.</p>
+<p>We will look into more details and correlations between variable in future post.</p>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://janeshdevkota.com/2017/12/spatial-analysis-and-coordinate-transformation-in-r/" data-tooltip="Spatial data and coordinate transformation in R">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Janesh Devkota. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="http://janeshdevkota.com/2017/12/spatial-analysis-and-coordinate-transformation-in-r/" data-tooltip="Spatial data and coordinate transformation in R">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fjaneshdevkota.com%2F2017%2F12%2F2015-earthquake-in-nepal-data-analysis-and-implications%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http%3A%2F%2Fjaneshdevkota.com%2F2017%2F12%2F2015-earthquake-in-nepal-data-analysis-and-implications%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http%3A%2F%2Fjaneshdevkota.com%2F2017%2F12%2F2015-earthquake-in-nepal-data-analysis-and-implications%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Janesh Devkota</h4>
+    
+      <div id="about-card-bio">Data science enthusiast working as environmental / water resource engineer</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Sr. Water Resources Engineer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Seattle, WA
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://janeshdevkota.com/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+                <h3 class="media-heading">Extracting water quality data from DataRetrieval Package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
+To install the dataRetrieval package use the following command:
+devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
+ bBox = Bounding box that uses the coordinates of lower left corner and upper right corner lat / long = lat / long will be specified by the user if they are interested to see if any data is available within radial distance.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://janeshdevkota.com/2017/12/spatial-analysis-and-coordinate-transformation-in-r/">
+                <h3 class="media-heading">Spatial data and coordinate transformation in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I come to these situations where I have to work with spatial datasets frequently. Sometimes the datasets is in lat-long format and sometimes on UTM (Universal transverse Mercator) coordinate or state plane coordinate system.
+I extensively use EFDC (Environmental Fluid Dynamic Code) model to do environmental modeling and have to convert the data into UTM coordinate system. I had used CORPSCON in the past but as an R enthusiast I wanted to dig deeper in R and finad a way to do the transformation in R environment.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="http://janeshdevkota.com/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+                <h3 class="media-heading">2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         3 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://janeshdevkota.com/images/cover-v1.2.0.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="http://janeshdevkota.com/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'http:\/\/janeshdevkota.com\/2017\/12\/2015-earthquake-in-nepal-data-analysis-and-implications\/';
+          
+            this.page.identifier = '\/2017\/12\/2015-earthquake-in-nepal-data-analysis-and-implications\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'janeshdevkota-com';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+

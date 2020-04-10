@@ -1,0 +1,196 @@
+---
+title: Analyzing Fantasy Premier League Data Using R
+author: ~
+date: '2017-11-15'
+thumbnailImagePosition: left
+thumbnailImage: https://snag.gy/2wEaTP.jpg
+slug: fpl_R
+categories: []
+tags: []
+---
+
+This is my first blog on data science topics. In this blog post, I will show you 
+how to import the data from `fantasy premier league` into R and perform exploratory 
+data analysis. 
+------------- 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+The questions that came up in my mind before doing this analysis are: 
+
+1. How has Wayne Rooney been performing for the last several years ? 
+2. How do Romelu Lukaku, Sergio Aguero, Harry Kane line up side by side ? 
+
+The data sources that we will be using on this tutorial can be found on the following links: 
+
+1. https://fantasy.premierleague.com/drf/elements/
+2. https://fantasy.premierleague.com/drf/element-summary/{player_id} 
+
+The second link above requires the user to know the `player_id` in order to access 
+the details about the particular player. 
+
+The packages we will need for this analysis are 
+
+```{r warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(rjson)
+library(knitr)
+library(plotly)
+```
+
+The data available for the link mentioned above is in `json` format. So, we will 
+use `rjson` package in order to read and summarize in R. 
+
+## Reading data using rjson package
+
+```{r}
+json_file <- "https://fantasy.premierleague.com/drf/elements/"
+json_data <- fromJSON(paste(readLines(json_file), collapse = ""))
+# View length of json_data
+length(json_data)
+```
+
+Now, we have read the data into R and `json_data` variable contains list of `566` 
+players. 
+
+## Change the data to data frame 
+
+```{r}
+players <- data.frame(do.call(rbind, lapply(json_data, rbind)))
+# View head
+head(players[,c(1:10)])
+# Sapply class
+sapply(players[,c(1:10)], class)
+# Reshape the data frame with only selected columns
+players <- players %>% dplyr::select(id, first_name, second_name, total_points, yellow_cards, 
+                                     red_cards, goals_scored, assists)
+head(players) %>% knitr::kable()
+```
+
+## Finding the players whose stats we are interested in 
+
+We need to be very careful with the letter type when searching the players. For example, 
+if you search `Alexis Sanchez`, then the program won't find any player with that name. 
+
+```{r}
+interested_players <- c("Alexis Sánchez", "Romelu Lukaku", "Harry Kane", "Wayne Rooney")
+
+players %>% 
+  dplyr::mutate(full_name = paste(first_name, second_name)) %>%
+  dplyr::filter(full_name %in% interested_players) %>% knitr::kable()
+```
+
+
+# Accessing Stats of individual players
+
+Now that we have found the `id` of interested players, let's go ahead and pull data for 
+these players. 
+
+I have created a function in order to pull information for the players 
+
+```{r}
+# A function to calculate the statistics of each player 
+player_stats <- function(player_id, player_name){
+  #browser()
+  json_data <- fromJSON(paste(readLines(paste0("https://fantasy.premierleague.com/drf/element-summary/", player_id)), collapse = ""))
+  # If we look at the length of json_data, it will be 6 
+  # We will be looking at only the first list : past_history
+  # Convert json_data to data.frame
+  player <- data.frame(do.call(rbind, lapply(json_data[1]$history_past, rbind)))
+  # Change each column from list to vector
+  player <- tidyr::unnest(player, )
+  player$name <- player_name
+  return(player)
+}
+```
+
+In the above function, we are just looking at the first list that contains the 
+past history of each player. The following information is available to us if we are interested:
+
+  * The information on lists are summarized below:
+  * List 1 : history_past
+  * List 2 : fixtures_summary
+  * List 3 : explain
+  * List 4 : history_summary
+  * List 5 : fixtures
+  * List 6 : history
+  
+### Viewing Wayne Rooney's Stats 
+
+```{r}
+rooney <- player_stats(player_id = 161, player_name = "Wayne Rooney")
+# Look at dimension of rooney
+dim(rooney)
+
+# View 6 columns of dataframe
+rooney[,1:6]
+# Names of columns
+names(rooney)
+```
+
+### Reshape function 
+
+For this tutorial, we will look at only `goals_scored`, `total_points` and `assists`. 
+So, I am going to write another function that selects only these three variables and
+change to tidy data. 
+
+```{r}
+player_reshape <- function(playerdf){
+  playerdf %>% tidyr::gather(key = "variable", value = "value", -id, -season_name, -name) %>% 
+    dplyr::filter(variable %in% c("goals_scored", "total_points", "assists"))  
+}
+```
+
+### Creating data frames for players 
+
+```{r}
+rooney_reshape <- player_stats(player_id = 161, player_name = "Wayne Rooney") %>% player_reshape()
+sanchez_reshape <- player_stats(player_id = 14, player_name = "Alexis Sanchez") %>% player_reshape()
+kane_reshape <- player_stats(player_id = 394, player_name = "Harry Kane") %>% player_reshape()
+lukaku_reshape <- player_stats(player_id = 285, player_name = "Romelu Lukaku") %>% player_reshape()
+```
+
+#### Combining all the dataframes into one and visualizing
+
+```{r}
+all_players <- rbind(rooney_reshape, sanchez_reshape, kane_reshape, lukaku_reshape)
+head(all_players)
+```
+
+The data is tidy because each observation is shown in each row in the table. 
+
+Now, let us use ggplot to visualize the plots. 
+
+```{r}
+ggplot(all_players) + geom_bar(aes(season_name, as.numeric(value), fill = name), 
+                               position = "dodge", width = 0.5, stat = "identity") + 
+  facet_wrap(~ variable, ncol = 1, scales = "free_y") + 
+  xlab("Premier League Season") + 
+  ylab("Total Fantasy Points / Goals Scored / Assists") + 
+  labs(fill = "Players")  + 
+  theme(legend.position = "top")
+```
+
+If you want to view the interactive version of the above graph use the `plotly` package and 
+use `ggplotly` function. 
+
+```{r}
+library(plotly)
+ggplotly(ggplot(all_players) + geom_bar(aes(season_name, as.numeric(value), fill = name), 
+                               position = "dodge", width = 0.5, stat = "identity") + 
+  facet_wrap(~ variable, ncol = 1, scales = "free_y") + 
+  xlab("Premier League Season") + 
+  ylab("Total Fantasy Points / Goals Scored / Assists") + 
+  labs(fill = "Players")  + 
+  theme(legend.position = "top"))
+```
+
+I hope you guys learned how easy it is to bring the `fantasy premier league` data into R
+and then analyse using the awesome packages such as `dplyr`, `tidyr`, `ggplot2` etc. 
+
+Please leave your comments below. 
