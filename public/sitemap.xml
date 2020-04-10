@@ -28,12 +28,12 @@
   </url>
   
   <url>
-    <loc>/publications/</loc>
+    <loc>/about/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>/publications/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
   </url>
   
@@ -46,7 +46,7 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>/posts/</loc>
   </url>
   
 </urlset>

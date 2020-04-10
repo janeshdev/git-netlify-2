@@ -43,22 +43,22 @@ I extensively use EFDC (Environmental Fluid Dynamic Code) model to do environmen
     </item>
     
     <item>
+      <title>Janesh Devkota, PhD</title>
+      <link>/about/</link>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I am a Business Intelligence Engineer working in Amazon. I work on machine learning, data analysis, visualization and use R and python extensively.
+Before Amazon, I worked as a water resources / environmental engineer currently working in Dynamic Solutions International LLC in Edmonds, WA. I completed my PhD from Auburn University in 2014 and completed masters in Civil Engineering (MCE) from Auburn University in Summer 2012. During my PhD in Auburn, I worked on number of projects that required numerical modeling, data analysis, data munging, data visualization and machine learning.</description>
+    </item>
+    
+    <item>
       <title>Publications / Presentations / Project Experience</title>
       <link>/publications/</link>
       <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/publications/</guid>
       <description>Publications  Devkota, J., Fang, X., and Fang, V. Z. (2013). “Response characteristics of Perdido and Wolf Bay system to inflows and sea level rise.” British Journal of Environment and Climate Change, 3(2), 229-256. Devkota, J., and Fang, X. (2014). “Numerical simulation of flow dynamics in a tidal river under various upstream hydrologic conditions.” Hydrological Sciences Journal, 1-24. Devkota, J., and Fang, X. (2015). “Quantification of Water and Salt Exchanges in a Tidal Estuary.</description>
-    </item>
-    
-    <item>
-      <title>Welcome to my page</title>
-      <link>/about/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>I am a water resources / environmental engineer currently working in Dynamic Solutions International LLC in Edmonds, WA. I completed my PhD from Auburn University in 2014 and completed masters in Civil Engineering (MCE) from Auburn University in Summer 2012. During my PhD in Auburn, I worked on number of projects that required numerical modeling, data analysis, data munging, data visualization and machine learning.
-I am a passionate scientist who loves explaining data science / data visualization to non-technical business audiences.</description>
     </item>
     
   </channel>
