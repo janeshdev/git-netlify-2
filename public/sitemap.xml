@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2018/02/extracting-water-quality-data-from-dataretrieval-package/</loc>
-    <lastmod>2018-02-19T00:00:00+00:00</lastmod>
+    <loc>/post/</loc>
+    <lastmod>2020-04-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>/2020/04/tour-de-france-analysis/</loc>
+    <lastmod>2020-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/04/regular-expressions-in-python/</loc>
+    <lastmod>2020-04-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/02/extracting-water-quality-data-from-dataretrieval-package/</loc>
     <lastmod>2018-02-19T00:00:00+00:00</lastmod>
   </url>
   

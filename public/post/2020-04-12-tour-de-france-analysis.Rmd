@@ -1,0 +1,116 @@
+---
+title: Tour de France Analysis
+author: ~
+date: '2020-04-12'
+slug: tour-de-france-analysis
+categories: []
+tags: []
+keywords:
+  - tech
+---
+
+In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on https://github.com/rfordatascience/tidytuesday. Tour de France datasets can be found on https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md 
+
+First of all let us download the data. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(skimr)
+library(ggrepel)
+library(ggplot2)
+```
+
+```{r}
+tdf_winners <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv')
+head(tdf_winners)
+```
+
+There are a total of 19 columns in the data. Let's use the skimr package to know about the datasets in more detail. 
+
+```{r}
+skimr::skim(tdf_winners)
+```
+
+This is a great summary that tells us details about the type of data. In this data there are 3 character columns, 3 date columns and 9 numeric columns. 
+
+Also there is quite a few missing data for full_name and nickname character columns. 
+
+Let us look at the top 10 people who have won tour de France by their nationality and birth country. 
+
+```{r}
+tdf_winners %>% 
+  count(winner_name, nationality, birth_country, sort = TRUE) %>% 
+  top_n(10) #%>% knitr::kable()
+```
+
+Let's look at the age when Neil Armstrong won the competition
+
+```{r}
+tdf_winners %>% 
+  filter(winner_name == "Lance Armstrong") %>% 
+  select(edition, start_date, winner_name, age)
+```
+
+How does winners average time differs from other winners 
+
+```{r}
+tdf_winners %>% 
+  group_by(winner_name) %>% 
+  summarise(number_wins = n(),
+            time_overall = round(mean(time_overall, na.rm = TRUE),2),  
+            time_margin = round(mean(time_margin, na.rm = TRUE), 2)) %>% 
+  arrange(desc(number_wins), time_overall) %>% 
+  ungroup() %>% 
+  head(10) %>% 
+  knitr::kable()
+```
+
+Let's plot of age of winner with the competition 
+
+```{r}
+tdf_winners %>% 
+  ggplot() + geom_line(aes(start_date, age)) 
+```
+
+Winner team distribution
+
+```{r}
+tdf_winners %>% 
+  count(winner_team, sort = TRUE) %>% 
+  ungroup() %>%
+  ggplot() + geom_col(aes(reorder(winner_team, n), n), fill = 'red') +
+  coord_flip() + 
+  labs(y = "Number of wins by the team", x = "")
+```
+
+stage_wins 
+
+```{r}
+tdf_winners %>% 
+  group_by(winner_name) %>% 
+  summarise(wins = n() , 
+            sum_stage_wins = sum(stage_wins), 
+            sum_stages_led = sum(stages_led)) %>% 
+  arrange(desc(wins)) %>% 
+  head(10) %>% 
+  pivot_longer(names_to = "variable", values_to = "value", cols = wins:sum_stages_led) %>% 
+  ggplot() + geom_col(aes(reorder(winner_name, value),value, fill = variable)) + 
+  facet_wrap(~ variable, scales = "free", nrow = 3) + 
+  labs(x = "Winner", y = "Sum of wins / stages led / stage wins") + 
+  coord_flip()
+```
+
+Please note that the axis are different for all the facets. 
+
+One thing that strikes me is that Eddy Merckx had more stages led and stage wins than Lance Armstrong. Looks like somehow he couldn't clinch some of those tournaments. Not sure if both of them competed at the same time. Let's dig deeper to see at what competitions did they win. 
+
+```{r}
+tdf_winners %>% 
+  filter(winner_name %in% c('Lance Armstrong', 'Eddy Merckx')) %>% 
+  select(start_date, winner_name, winner_team, stage_wins, stages_led) %>% 
+  knitr::kable()
+```
+
+This dataset clearly shows that these two athletes / cyclists competed at totally different times. 
+
+There could be lot of other interesting insights that we could get from this great dataset. I didn't take a look at two of the files `tdf_stages.csv` and `stage_data.csv` file. 

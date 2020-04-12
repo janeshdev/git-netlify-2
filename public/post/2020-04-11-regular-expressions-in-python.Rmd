@@ -1,0 +1,33 @@
+---
+title: Regular Expressions in Python
+author: ~
+date: '2020-04-11'
+slug: regular-expressions-in-python
+categories: []
+tags: []
+keywords:
+  - tech
+---
+
+In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation. 
+
+Some of the common text tasks in python are as follows:
+
+* Removing some text from the series or a list 
+
+```{r, echo = FALSE}
+library(reticulate)
+# use_python("/anaconda3/bin/python.app")
+use_python("/anaconda3/bin/python", required = TRUE)
+use_condaenv("base", conda = "/anaconda3/bin/conda")
+```
+
+```{python}
+test = [1, 2, 'hello']
+print(test[0])
+```
+
+```{r}
+x <- c(12,2, 3, 4)
+print(x)
+```

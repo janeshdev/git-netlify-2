@@ -22,32 +22,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.66.0 with theme Tranquilpeak 0.4.3-BETA">
-    <title>Extracting water quality data from DataRetrieval Package</title>
+    <title>Regular Expressions in Python</title>
     <meta name="author" content="Janesh Devkota">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="tech">
 
     <link rel="icon" href="/favicon.png">
     
 
     
-    <meta name="description" content="In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
-To install the dataRetrieval package use the following command:
-devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
- bBox = Bounding box that uses the coordinates of lower left corner and upper right corner lat / long = lat / long will be specified by the user if they are interested to see if any data is available within radial distance.">
-    <meta property="og:description" content="In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
-To install the dataRetrieval package use the following command:
-devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
- bBox = Bounding box that uses the coordinates of lower left corner and upper right corner lat / long = lat / long will be specified by the user if they are interested to see if any data is available within radial distance.">
+    <meta name="description" content=" In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation.
+Some of the common text tasks in python are as follows:
+ Removing some text from the series or a list  test = [1, 2, &#39;hello&#39;] print(test[0]) ## 1 x &lt;- c(12,2, 3, 4) print(x) ## [1] 12 2 3 4 ">
+    <meta property="og:description" content=" In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation.
+Some of the common text tasks in python are as follows:
+ Removing some text from the series or a list  test = [1, 2, &#39;hello&#39;] print(test[0]) ## 1 x &lt;- c(12,2, 3, 4) print(x) ## [1] 12 2 3 4 ">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Extracting water quality data from DataRetrieval Package">
-    <meta property="og:url" content="/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+    <meta property="og:title" content="Regular Expressions in Python">
+    <meta property="og:url" content="/2020/04/regular-expressions-in-python/">
     <meta property="og:site_name" content="Janesh Devkota&#39;s Garden">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Janesh Devkota&#39;s Garden">
-    <meta name="twitter:description" content="In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
-To install the dataRetrieval package use the following command:
-devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
- bBox = Bounding box that uses the coordinates of lower left corner and upper right corner lat / long = lat / long will be specified by the user if they are interested to see if any data is available within radial distance.">
+    <meta name="twitter:description" content=" In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation.
+Some of the common text tasks in python are as follows:
+ Removing some text from the series or a list  test = [1, 2, &#39;hello&#39;] print(test[0]) ## 1 x &lt;- c(12,2, 3, 4) print(x) ## [1] 12 2 3 4 ">
     
       <meta name="twitter:creator" content="@janeshdev">
     
@@ -244,15 +241,15 @@ devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main funct
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Extracting water quality data from DataRetrieval Package
+      Regular Expressions in Python
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2018-02-19T00:00:00Z">
+      <time itemprop="datePublished" datetime="2020-04-11T00:00:00Z">
         
-  February 19, 2018
+  April 11, 2020
 
       </time>
     
@@ -266,32 +263,17 @@ devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main funct
               
 
 
-<p>In this blog post, I will be showing some capabilities of <code>dataRetrieval</code> package
-by USGS to extract water quality data.</p>
-<p>To install the <code>dataRetrieval</code> package use the following command:</p>
-<pre class="r"><code>devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;)</code></pre>
-<p>The main function I will be discussing is <code>readWQPdata</code>. The users can search the data
-using various options as shown below:</p>
+<p>In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation.</p>
+<p>Some of the common text tasks in python are as follows:</p>
 <ul>
-<li>bBox = Bounding box that uses the coordinates of lower left corner and upper right corner</li>
-<li>lat / long = lat / long will be specified by the user if they are interested to
-see if any data is available within radial distance.</li>
-<li>countycode</li>
-<li>startDate:</li>
-<li>endDate:</li>
-<li>characteristicType</li>
-<li>characteristicName : CharacteristicName can be one of following</li>
+<li>Removing some text from the series or a list</li>
 </ul>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<p>The tutorial for dataRetrieval can be accessed at
-<code>https://owi.usgs.gov/R/dataRetrieval.html#1</code></p>
+<pre class="python"><code>test = [1, 2, &#39;hello&#39;]
+print(test[0])</code></pre>
+<pre><code>## 1</code></pre>
+<pre class="r"><code>x &lt;- c(12,2, 3, 4)
+print(x)</code></pre>
+<pre><code>## [1] 12  2  3  4</code></pre>
 
               
             </div>
@@ -307,7 +289,7 @@ see if any data is available within radial distance.</li>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/regular-expressions-in-python/" data-tooltip="Regular Expressions in Python">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/tour-de-france-analysis/" data-tooltip="Tour de France Analysis">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -315,7 +297,7 @@ see if any data is available within radial distance.</li>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/12/spatial-analysis-and-coordinate-transformation-in-r/" data-tooltip="Spatial data and coordinate transformation in R">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/02/extracting-water-quality-data-from-dataretrieval-package/" data-tooltip="Extracting water quality data from DataRetrieval Package">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -333,19 +315,19 @@ see if any data is available within radial distance.</li>
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -393,7 +375,7 @@ see if any data is available within radial distance.</li>
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/regular-expressions-in-python/" data-tooltip="Regular Expressions in Python">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/tour-de-france-analysis/" data-tooltip="Tour de France Analysis">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -401,7 +383,7 @@ see if any data is available within radial distance.</li>
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="/2017/12/spatial-analysis-and-coordinate-transformation-in-r/" data-tooltip="Spatial data and coordinate transformation in R">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/02/extracting-water-quality-data-from-dataretrieval-package/" data-tooltip="Extracting water quality data from DataRetrieval Package">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -419,19 +401,19 @@ see if any data is available within radial distance.</li>
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/regular-expressions-in-python/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -461,19 +443,19 @@ see if any data is available within radial distance.</li>
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F02%2Fextracting-water-quality-data-from-dataretrieval-package%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2020%2F04%2Fregular-expressions-in-python%2F">
           <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F02%2Fextracting-water-quality-data-from-dataretrieval-package%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F04%2Fregular-expressions-in-python%2F">
           <i class="fa fa-twitter"></i><span>Share on Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F02%2Fextracting-water-quality-data-from-dataretrieval-package%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2020%2F04%2Fregular-expressions-in-python%2F">
           <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
         </a>
       </li>
@@ -672,9 +654,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = '\/2018\/02\/extracting-water-quality-data-from-dataretrieval-package\/';
+          this.page.url = '\/2020\/04\/regular-expressions-in-python\/';
           
-            this.page.identifier = '\/2018\/02\/extracting-water-quality-data-from-dataretrieval-package\/'
+            this.page.identifier = '\/2020\/04\/regular-expressions-in-python\/'
           
         };
         (function() {

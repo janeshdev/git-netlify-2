@@ -1,0 +1,1273 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.66.0 with theme Tranquilpeak 0.4.3-BETA">
+    <title>Tour de France Analysis</title>
+    <meta name="author" content="Janesh Devkota">
+    <meta name="keywords" content="tech">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on https://github.com/rfordatascience/tidytuesday. Tour de France datasets can be found on https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md
+First of all let us download the data.
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;) ## Parsed with column specification: ## cols( ## edition = col_double(), ## start_date = col_date(format = &quot;&quot;), ## winner_name = col_character(), ## winner_team = col_character(), ## distance = col_double(), ## time_overall = col_double(), ## time_margin = col_double(), ## stage_wins = col_double(), ## stages_led = col_double(), ## height = col_double(), ## weight = col_double(), ## age = col_double(), ## born = col_date(format = &quot;&quot;), ## died = col_date(format = &quot;&quot;), ## full_name = col_character(), ## nickname = col_character(), ## birth_town = col_character(), ## birth_country = col_character(), ## nationality = col_character() ## ) head(tdf_winners) ## # A tibble: 6 x 19 ## edition start_date winner_name winner_team distance time_overall time_margin ## &lt;dbl&gt; &lt;date&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 1 1903-07-01 Maurice Ga… La Françai… 2428 94.">
+    <meta property="og:description" content="In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on https://github.com/rfordatascience/tidytuesday. Tour de France datasets can be found on https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md
+First of all let us download the data.
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;) ## Parsed with column specification: ## cols( ## edition = col_double(), ## start_date = col_date(format = &quot;&quot;), ## winner_name = col_character(), ## winner_team = col_character(), ## distance = col_double(), ## time_overall = col_double(), ## time_margin = col_double(), ## stage_wins = col_double(), ## stages_led = col_double(), ## height = col_double(), ## weight = col_double(), ## age = col_double(), ## born = col_date(format = &quot;&quot;), ## died = col_date(format = &quot;&quot;), ## full_name = col_character(), ## nickname = col_character(), ## birth_town = col_character(), ## birth_country = col_character(), ## nationality = col_character() ## ) head(tdf_winners) ## # A tibble: 6 x 19 ## edition start_date winner_name winner_team distance time_overall time_margin ## &lt;dbl&gt; &lt;date&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 1 1903-07-01 Maurice Ga… La Françai… 2428 94.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Tour de France Analysis">
+    <meta property="og:url" content="/2020/04/tour-de-france-analysis/">
+    <meta property="og:site_name" content="Janesh Devkota&#39;s Garden">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Janesh Devkota&#39;s Garden">
+    <meta name="twitter:description" content="In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on https://github.com/rfordatascience/tidytuesday. Tour de France datasets can be found on https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md
+First of all let us download the data.
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;) ## Parsed with column specification: ## cols( ## edition = col_double(), ## start_date = col_date(format = &quot;&quot;), ## winner_name = col_character(), ## winner_team = col_character(), ## distance = col_double(), ## time_overall = col_double(), ## time_margin = col_double(), ## stage_wins = col_double(), ## stages_led = col_double(), ## height = col_double(), ## weight = col_double(), ## age = col_double(), ## born = col_date(format = &quot;&quot;), ## died = col_date(format = &quot;&quot;), ## full_name = col_character(), ## nickname = col_character(), ## birth_town = col_character(), ## birth_country = col_character(), ## nationality = col_character() ## ) head(tdf_winners) ## # A tibble: 6 x 19 ## edition start_date winner_name winner_team distance time_overall time_margin ## &lt;dbl&gt; &lt;date&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 1 1903-07-01 Maurice Ga… La Françai… 2428 94.">
+    
+      <meta name="twitter:creator" content="@janeshdev">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=640">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Janesh Devkota&#39;s Garden</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Janesh Devkota</h4>
+        
+          <h5 class="sidebar-profile-bio">Data science enthusiast working as BI Engineer in Amazon</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/post">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/about/index.html">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/publications/index.html">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Publications</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/janeshdev">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/1877744/janesh-devkota">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/janeshdev">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Tour de France Analysis
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-04-12T00:00:00Z">
+        
+  April 12, 2020
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+
+<p>In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on <a href="https://github.com/rfordatascience/tidytuesday" class="uri">https://github.com/rfordatascience/tidytuesday</a>. Tour de France datasets can be found on <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md" class="uri">https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md</a></p>
+<p>First of all let us download the data.</p>
+<pre class="r"><code>tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   edition = col_double(),
+##   start_date = col_date(format = &quot;&quot;),
+##   winner_name = col_character(),
+##   winner_team = col_character(),
+##   distance = col_double(),
+##   time_overall = col_double(),
+##   time_margin = col_double(),
+##   stage_wins = col_double(),
+##   stages_led = col_double(),
+##   height = col_double(),
+##   weight = col_double(),
+##   age = col_double(),
+##   born = col_date(format = &quot;&quot;),
+##   died = col_date(format = &quot;&quot;),
+##   full_name = col_character(),
+##   nickname = col_character(),
+##   birth_town = col_character(),
+##   birth_country = col_character(),
+##   nationality = col_character()
+## )</code></pre>
+<pre class="r"><code>head(tdf_winners)</code></pre>
+<pre><code>## # A tibble: 6 x 19
+##   edition start_date winner_name winner_team distance time_overall time_margin
+##     &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1       1 1903-07-01 Maurice Ga… La Françai…     2428         94.6        2.99
+## 2       2 1904-07-02 Henri Corn… Conte           2428         96.1        2.27
+## 3       3 1905-07-09 Louis Trou… Peugeot–Wo…     2994         NA         NA   
+## 4       4 1906-07-04 René Potti… Peugeot–Wo…     4637         NA         NA   
+## 5       5 1907-07-08 Lucien Pet… Peugeot–Wo…     4488         NA         NA   
+## 6       6 1908-07-13 Lucien Pet… Peugeot–Wo…     4497         NA         NA   
+## # … with 12 more variables: stage_wins &lt;dbl&gt;, stages_led &lt;dbl&gt;, height &lt;dbl&gt;,
+## #   weight &lt;dbl&gt;, age &lt;dbl&gt;, born &lt;date&gt;, died &lt;date&gt;, full_name &lt;chr&gt;,
+## #   nickname &lt;chr&gt;, birth_town &lt;chr&gt;, birth_country &lt;chr&gt;, nationality &lt;chr&gt;</code></pre>
+<p>There are a total of 19 columns in the data. Let’s use the skimr package to know about the datasets in more detail.</p>
+<pre class="r"><code>skimr::skim(tdf_winners)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">tdf_winners</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">106</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">19</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">7</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">9</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">winner_name</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">10</td>
+<td align="right">19</td>
+<td align="right">0</td>
+<td align="right">63</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">winner_team</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">48</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">full_name</td>
+<td align="right">60</td>
+<td align="right">0.43</td>
+<td align="right">15</td>
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">23</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">nickname</td>
+<td align="right">32</td>
+<td align="right">0.70</td>
+<td align="right">1</td>
+<td align="right">95</td>
+<td align="right">0</td>
+<td align="right">37</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">birth_town</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">58</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">birth_country</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">15</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">nationality</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">14</td>
+<td align="right">106</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">start_date</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">1903-07-01</td>
+<td align="left">2019-07-06</td>
+<td align="left">1966-12-24</td>
+<td align="right">106</td>
+</tr>
+<tr class="even">
+<td align="left">born</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">1871-03-03</td>
+<td align="left">1997-01-13</td>
+<td align="left">1940-12-27</td>
+<td align="right">63</td>
+</tr>
+<tr class="odd">
+<td align="left">died</td>
+<td align="right">50</td>
+<td align="right">0.53</td>
+<td align="left">1907-01-25</td>
+<td align="left">2019-08-16</td>
+<td align="left">1980-04-10</td>
+<td align="right">38</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">edition</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">53.50</td>
+<td align="right">30.74</td>
+<td align="right">1.00</td>
+<td align="right">27.25</td>
+<td align="right">53.50</td>
+<td align="right">79.75</td>
+<td align="right">106.00</td>
+<td align="left">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">distance</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4212.06</td>
+<td align="right">704.28</td>
+<td align="right">2428.00</td>
+<td align="right">3657.88</td>
+<td align="right">4155.50</td>
+<td align="right">4652.50</td>
+<td align="right">5745.00</td>
+<td align="left">▁▇▇▆▃</td>
+</tr>
+<tr class="odd">
+<td align="left">time_overall</td>
+<td align="right">8</td>
+<td align="right">0.92</td>
+<td align="right">125.75</td>
+<td align="right">41.56</td>
+<td align="right">82.09</td>
+<td align="right">92.60</td>
+<td align="right">115.03</td>
+<td align="right">142.68</td>
+<td align="right">238.74</td>
+<td align="left">▇▅▂▁▂</td>
+</tr>
+<tr class="even">
+<td align="left">time_margin</td>
+<td align="right">8</td>
+<td align="right">0.92</td>
+<td align="right">0.27</td>
+<td align="right">0.48</td>
+<td align="right">0.00</td>
+<td align="right">0.05</td>
+<td align="right">0.10</td>
+<td align="right">0.25</td>
+<td align="right">2.99</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">stage_wins</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2.74</td>
+<td align="right">1.84</td>
+<td align="right">0.00</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">4.00</td>
+<td align="right">8.00</td>
+<td align="left">▆▇▃▂▁</td>
+</tr>
+<tr class="even">
+<td align="left">stages_led</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">10.79</td>
+<td align="right">5.31</td>
+<td align="right">1.00</td>
+<td align="right">6.25</td>
+<td align="right">12.00</td>
+<td align="right">14.00</td>
+<td align="right">22.00</td>
+<td align="left">▆▇▇▇▃</td>
+</tr>
+<tr class="odd">
+<td align="left">height</td>
+<td align="right">40</td>
+<td align="right">0.62</td>
+<td align="right">1.78</td>
+<td align="right">0.06</td>
+<td align="right">1.61</td>
+<td align="right">1.74</td>
+<td align="right">1.77</td>
+<td align="right">1.82</td>
+<td align="right">1.90</td>
+<td align="left">▁▁▇▃▂</td>
+</tr>
+<tr class="even">
+<td align="left">weight</td>
+<td align="right">39</td>
+<td align="right">0.63</td>
+<td align="right">69.25</td>
+<td align="right">6.59</td>
+<td align="right">52.00</td>
+<td align="right">64.50</td>
+<td align="right">69.00</td>
+<td align="right">74.00</td>
+<td align="right">88.00</td>
+<td align="left">▁▆▇▇▁</td>
+</tr>
+<tr class="odd">
+<td align="left">age</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">27.72</td>
+<td align="right">3.35</td>
+<td align="right">19.00</td>
+<td align="right">26.00</td>
+<td align="right">28.00</td>
+<td align="right">30.00</td>
+<td align="right">36.00</td>
+<td align="left">▁▃▇▃▂</td>
+</tr>
+</tbody>
+</table>
+<p>This is a great summary that tells us details about the type of data. In this data there are 3 character columns, 3 date columns and 9 numeric columns.</p>
+<p>Also there is quite a few missing data for full_name and nickname character columns.</p>
+<p>Let us look at the top 10 people who have won tour de France by their nationality and birth country.</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  count(winner_name, nationality, birth_country, sort = TRUE) %&gt;% 
+  top_n(10) #%&gt;% knitr::kable()</code></pre>
+<pre><code>## Selecting by n</code></pre>
+<pre><code>## # A tibble: 21 x 4
+##    winner_name      nationality    birth_country     n
+##    &lt;chr&gt;            &lt;chr&gt;          &lt;chr&gt;         &lt;int&gt;
+##  1 Lance Armstrong   United States USA               7
+##  2 Bernard Hinault   France        France            5
+##  3 Eddy Merckx       Belgium       Belgium           5
+##  4 Jacques Anquetil  France        France            5
+##  5 Miguel Induráin   Spain         Spain             5
+##  6 Chris Froome      Great Britain Kenya             4
+##  7 Greg LeMond       United States USA               3
+##  8 Louison Bobet     France        France            3
+##  9 Philippe Thys     Belgium       Belgium           3
+## 10 Alberto Contador  Spain         Spain             2
+## # … with 11 more rows</code></pre>
+<p>Let’s look at the age when Neil Armstrong won the competition</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  filter(winner_name == &quot;Lance Armstrong&quot;) %&gt;% 
+  select(edition, start_date, winner_name, age)</code></pre>
+<pre><code>## # A tibble: 7 x 4
+##   edition start_date winner_name       age
+##     &lt;dbl&gt; &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;
+## 1      86 1999-07-03 Lance Armstrong    27
+## 2      87 2000-07-01 Lance Armstrong    28
+## 3      88 2001-07-07 Lance Armstrong    29
+## 4      89 2002-07-06 Lance Armstrong    30
+## 5      90 2003-07-05 Lance Armstrong    31
+## 6      91 2004-07-03 Lance Armstrong    32
+## 7      92 2005-07-02 Lance Armstrong    33</code></pre>
+<p>How does winners average time differs from other winners</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  group_by(winner_name) %&gt;% 
+  summarise(number_wins = n(),
+            time_overall = round(mean(time_overall, na.rm = TRUE),2),  
+            time_margin = round(mean(time_margin, na.rm = TRUE), 2)) %&gt;% 
+  arrange(desc(number_wins), time_overall) %&gt;% 
+  ungroup() %&gt;% 
+  head(10) %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">winner_name</th>
+<th align="right">number_wins</th>
+<th align="right">time_overall</th>
+<th align="right">time_margin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lance Armstrong</td>
+<td align="right">7</td>
+<td align="right">86.57</td>
+<td align="right">0.09</td>
+</tr>
+<tr class="even">
+<td align="left">Miguel Induráin</td>
+<td align="right">5</td>
+<td align="right">98.84</td>
+<td align="right">0.07</td>
+</tr>
+<tr class="odd">
+<td align="left">Bernard Hinault</td>
+<td align="right">5</td>
+<td align="right">102.66</td>
+<td align="right">0.13</td>
+</tr>
+<tr class="even">
+<td align="left">Eddy Merckx</td>
+<td align="right">5</td>
+<td align="right">111.42</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="odd">
+<td align="left">Jacques Anquetil</td>
+<td align="right">5</td>
+<td align="right">122.59</td>
+<td align="right">0.11</td>
+</tr>
+<tr class="even">
+<td align="left">Chris Froome</td>
+<td align="right">4</td>
+<td align="right">86.03</td>
+<td align="right">0.04</td>
+</tr>
+<tr class="odd">
+<td align="left">Greg LeMond</td>
+<td align="right">3</td>
+<td align="right">96.32</td>
+<td align="right">0.03</td>
+</tr>
+<tr class="even">
+<td align="left">Louison Bobet</td>
+<td align="right">3</td>
+<td align="right">133.33</td>
+<td align="right">0.19</td>
+</tr>
+<tr class="odd">
+<td align="left">Philippe Thys</td>
+<td align="right">3</td>
+<td align="right">208.99</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="even">
+<td align="left">Alberto Contador</td>
+<td align="right">2</td>
+<td align="right">88.41</td>
+<td align="right">0.04</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s plot of age of winner with the competition</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  ggplot() + geom_line(aes(start_date, age)) </code></pre>
+<p><img src="/post/2020-04-12-tour-de-france-analysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Winner team distribution</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  count(winner_team, sort = TRUE) %&gt;% 
+  ungroup() %&gt;%
+  ggplot() + geom_col(aes(reorder(winner_team, n), n), fill = &#39;red&#39;) +
+  coord_flip() + 
+  labs(y = &quot;Number of wins by the team&quot;, x = &quot;&quot;)</code></pre>
+<p><img src="/post/2020-04-12-tour-de-france-analysis_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>stage_wins</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  group_by(winner_name) %&gt;% 
+  summarise(wins = n() , 
+            sum_stage_wins = sum(stage_wins), 
+            sum_stages_led = sum(stages_led)) %&gt;% 
+  arrange(desc(wins)) %&gt;% 
+  head(10) %&gt;% 
+  pivot_longer(names_to = &quot;variable&quot;, values_to = &quot;value&quot;, cols = wins:sum_stages_led) %&gt;% 
+  ggplot() + geom_col(aes(reorder(winner_name, value),value, fill = variable)) + 
+  facet_wrap(~ variable, scales = &quot;free&quot;, nrow = 3) + 
+  labs(x = &quot;Winner&quot;, y = &quot;Sum of wins / stages led / stage wins&quot;) + 
+  coord_flip()</code></pre>
+<p><img src="/post/2020-04-12-tour-de-france-analysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Please note that the axis are different for all the facets.</p>
+<p>One thing that strikes me is that Eddy Merckx had more stages led and stage wins than Lance Armstrong. Looks like somehow he couldn’t clinch some of those tournaments. Not sure if both of them competed at the same time. Let’s dig deeper to see at what competitions did they win.</p>
+<pre class="r"><code>tdf_winners %&gt;% 
+  filter(winner_name %in% c(&#39;Lance Armstrong&#39;, &#39;Eddy Merckx&#39;)) %&gt;% 
+  select(start_date, winner_name, winner_team, stage_wins, stages_led) %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">start_date</th>
+<th align="left">winner_name</th>
+<th align="left">winner_team</th>
+<th align="right">stage_wins</th>
+<th align="right">stages_led</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1969-06-28</td>
+<td align="left">Eddy Merckx</td>
+<td align="left">Faema</td>
+<td align="right">6</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">1970-06-27</td>
+<td align="left">Eddy Merckx</td>
+<td align="left">Faemino–Faema</td>
+<td align="right">8</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">1971-06-26</td>
+<td align="left">Eddy Merckx</td>
+<td align="left">Molteni</td>
+<td align="right">4</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">1972-07-01</td>
+<td align="left">Eddy Merckx</td>
+<td align="left">Molteni</td>
+<td align="right">6</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">1974-06-27</td>
+<td align="left">Eddy Merckx</td>
+<td align="left">Molteni</td>
+<td align="right">8</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">1999-07-03</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">4</td>
+<td align="right">15</td>
+</tr>
+<tr class="odd">
+<td align="left">2000-07-01</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">1</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">2001-07-07</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">4</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">2002-07-06</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">4</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">2003-07-05</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">1</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">2004-07-03</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">U.S. Postal Service</td>
+<td align="right">5</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">2005-07-02</td>
+<td align="left">Lance Armstrong</td>
+<td align="left">Discovery Channel</td>
+<td align="right">1</td>
+<td align="right">17</td>
+</tr>
+</tbody>
+</table>
+<p>This dataset clearly shows that these two athletes / cyclists competed at totally different times.</p>
+<p>There could be lot of other interesting insights that we could get from this great dataset. I didn’t take a look at two of the files <code>tdf_stages.csv</code> and <code>stage_data.csv</code> file.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/regular-expressions-in-python/" data-tooltip="Regular Expressions in Python">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Janesh Devkota. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/regular-expressions-in-python/" data-tooltip="Regular Expressions in Python">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/tour-de-france-analysis/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2020%2F04%2Ftour-de-france-analysis%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F04%2Ftour-de-france-analysis%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2020%2F04%2Ftour-de-france-analysis%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/f258ccd6987dbe873c9935485a9383e0?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Janesh Devkota</h4>
+    
+      <div id="about-card-bio">Data science enthusiast working as BI Engineer in Amazon</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Business Intelligence Engineer
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Seattle, WA
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/04/tour-de-france-analysis/">
+                <h3 class="media-heading">Tour de France Analysis</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In this blog post, I am going to analyse the Tour de France TidyTuesday dataset. All tidy tuesdays dataset can be found on https://github.com/rfordatascience/tidytuesday. Tour de France datasets can be found on https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md
+First of all let us download the data.
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;) ## Parsed with column specification: ## cols( ## edition = col_double(), ## start_date = col_date(format = &quot;&quot;), ## winner_name = col_character(), ## winner_team = col_character(), ## distance = col_double(), ## time_overall = col_double(), ## time_margin = col_double(), ## stage_wins = col_double(), ## stages_led = col_double(), ## height = col_double(), ## weight = col_double(), ## age = col_double(), ## born = col_date(format = &quot;&quot;), ## died = col_date(format = &quot;&quot;), ## full_name = col_character(), ## nickname = col_character(), ## birth_town = col_character(), ## birth_country = col_character(), ## nationality = col_character() ## ) head(tdf_winners) ## # A tibble: 6 x 19 ## edition start_date winner_name winner_team distance time_overall time_margin ## &lt;dbl&gt; &lt;date&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 1 1903-07-01 Maurice Ga… La Françai… 2428 94.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2020/04/regular-expressions-in-python/">
+                <h3 class="media-heading">Regular Expressions in Python</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"> In this post, we will look into how we can use text manipulation and using regular expression to do text manipulation.
+Some of the common text tasks in python are as follows:
+ Removing some text from the series or a list  test = [1, 2, &#39;hello&#39;] print(test[0]) ## 1 x &lt;- c(12,2, 3, 4) print(x) ## [1] 12 2 3 4 </div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/02/extracting-water-quality-data-from-dataretrieval-package/">
+                <h3 class="media-heading">Extracting water quality data from DataRetrieval Package</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Feb 2, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In this blog post, I will be showing some capabilities of dataRetrieval package by USGS to extract water quality data.
+To install the dataRetrieval package use the following command:
+devtools::install_github(repo = &quot;USGS-R/dataRetrieval&quot;) The main function I will be discussing is readWQPdata. The users can search the data using various options as shown below:
+ bBox = Bounding box that uses the coordinates of lower left corner and upper right corner lat / long = lat / long will be specified by the user if they are interested to see if any data is available within radial distance.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/12/spatial-analysis-and-coordinate-transformation-in-r/">
+                <h3 class="media-heading">Spatial data and coordinate transformation in R</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I come to these situations where I have to work with spatial datasets frequently. Sometimes the datasets is in lat-long format and sometimes on UTM (Universal transverse Mercator) coordinate or state plane coordinate system.
+I extensively use EFDC (Environmental Fluid Dynamic Code) model to do environmental modeling and have to convert the data into UTM coordinate system. I had used CORPSCON in the past but as an R enthusiast I wanted to dig deeper in R and finad a way to do the transformation in R environment.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2017/12/2015-earthquake-in-nepal-data-analysis-and-implications/">
+                <h3 class="media-heading">2015 Earthquake in Nepal : Earthquake magnitude and Casualty Analysis</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Dec 12, 2017
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">In this blogpost, I am going to take the earthquake data from April 2015 to May 2016 throughout the World. Then we will process the data in usable form and look at the data on Nepal. Later, we will also dive into the casualties from this devastating earthquake. We will look at how many people died, got injured from which district, using ggplot2, wordcloud and leaflet package.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         5 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/cover-v1.2.0.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2020\/04\/tour-de-france-analysis\/';
+          
+            this.page.identifier = '\/2020\/04\/tour-de-france-analysis\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'janeshdevkota-com';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
